@@ -1,0 +1,392 @@
+/*Fonts*/
+@font-face {
+	font-family: Sorry Not Sorry;
+	src: url('Fonts/KGSorryNotSorry.ttf');
+}
+
+@font-face {
+	font-family: Roboto;
+	src: url('Fonts/Roboto-Light.ttf');
+}
+
+/*Grid View*/
+* {
+    box-sizing: border-box;
+}
+.row:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+}
+.col-1 {width: 13%;}
+.col-2 {width: 74%;}
+.col-3 {width: 13%;}
+
+/*Text Box Styling*/
+input:focus{
+	outline: none;
+	border-color: #ffffff;
+	box-shadow: 0 0 5px #ffffff;
+}
+
+
+/*Dividers*/
+div.divider{
+	border-left: 3px solid white;
+	border-right: 3px solid white;
+    height: 550px;
+}
+
+/*Middle Bar Welcome*/
+
+div.welcometitle{
+	color: #ffffff;
+	font-family: Sorry Not Sorry;
+	font-size: 64px;
+	text-align: center;
+	display: block;
+}
+
+div.welcometext{
+	color: #ffffff;
+	font-family: Roboto;
+	font-size: 24px;
+	text-align: center;
+}
+
+/* Middle bar Shop*/
+
+div.inventory{
+    display: none;
+    color: white;
+    width: 250px;
+    font-family: Roboto;
+    float: left;
+    overflow: hidden;
+    height: 550px;
+    font-size: 13.5px;
+    padding-left: 20px;
+    padding-top: 30px;
+}
+
+#hoverinfo{
+    pointer-events: none;
+}
+
+a:link{
+    text-decoration: none;
+    font-weight: normal;
+    color: white;
+}
+
+div.shop{
+	display: none;
+	color: white;
+	width: 680px;
+	float: left;
+	padding: 15px;
+    overflow: hidden;
+}
+
+div.filterlist{
+	color: white;
+	display: none;
+	width: 230px;
+	padding: 15px;
+	font-family: Roboto;
+	list-style-type: none;
+    float: left;
+    overflow: hidden;
+}
+
+/* Runes CSS */
+.msgq{
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-bottom: 25px;
+    font-size: 25px;
+}
+#runes{
+    display: none;
+    color: #ffffff;
+	font-family: Sorry Not Sorry;
+    height: 550px;
+}
+
+#marks{
+    float: left;
+}
+
+#seals{
+    float: left;
+}
+#glyphs{
+    float: left;
+}
+#quints{
+    float: left;
+    padding-right: 10px;
+}
+#quints2{
+    float: right;
+    padding-left: 10px;
+}
+
+.numRunes ul{
+    list-style: none;
+    padding: 0;
+    margin-top: 3px;
+    margin-bottom: 25px;
+    font-size: 16px;
+    cursor: default;
+
+}
+.numRunes li{
+    display: inline;
+    border: 1px solid #666699;
+    padding: 2px;
+    background-color: #262626;
+}
+
+/*Champion Search*/
+
+/* this is the intiial search icon/bar */
+img.champicon{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 285px;
+	border-width: 3px;
+	border-style: solid;
+	border-color: #000000;
+	opacity: 0.9;
+}
+
+/* this is for subsequent searches */
+input.champsearch2{
+	margin-top: 14px;
+	margin-left: 19px;
+	color: #ffffff;
+	background-color: #111111;
+	font-family: Roboto;
+	font-size: 20px;
+	text-align: left;
+	width: 117px;
+	opacity: 0.8;
+	border: 0px;
+}
+
+
+/*Stats*/
+h1{
+	font-family: Sorry Not Sorry;
+	color: #ffffff;
+}
+
+h1:hover{
+	text-shadow: 0 0 5px #ffffff;
+}
+
+h2{
+	font-family: Roboto;
+	font-size: 16;
+	color: #ffffff;
+	padding: 10px;
+}
+
+/* Abilities */
+div.abilitybar{
+	margin: 0 auto;
+	width: 450px;
+}
+
+div.abilitybar img{
+	margin-top: 19px;
+	margin-left: 20px;
+}
+
+div.abilityname{
+	color: #ffffff;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: Sorry Not Sorry;
+	font-size: 35px;
+	text-align: center;
+	margin-top: 15px;
+}
+
+div.abilitytext{
+	color: #ffffff;
+	font-family: Roboto;
+	font-size: 20px;
+
+	margin-top: 15px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom: 15px;
+}
+
+div.abilitybox{
+	width: 100%;
+	height: auto;
+	background-color: #000000;
+	opacity: 0.8;
+	padding: 5px;
+}
+
+/*Navigation*/
+div.navigation{
+	position: absolute;
+	right: 50px;
+	bottom: 400px;
+}
+
+.statlist ul{
+	position: relative;
+	right: 20px;
+	list-style-type: none;
+	text-align: left;
+	font-family:  Roboto;
+	color: #ffffff;
+}
+
+.statlist li{
+	margin-bottom: 4px;
+}
+
+.transbarmid{
+	height: 600px;
+	background-color: #000000;
+	opacity: 0.8;
+}
+
+.navbar ul{
+	list-style-type: none;
+	text-align: right;
+	font-family: Sorry Not Sorry;
+	font-size: 16px;
+	color: #ffffff;
+	margin-top: 200px;
+}
+
+/* Game Data */
+div.gamedata{
+	display: none;
+    float: left;
+}
+
+div.gamedata ul{
+	list-style-type: none;
+	text-align: left;
+	font-family: Sorry Not Sorry;
+	font-size: 32px;
+	color: #ffffff;
+}
+
+div.gamedata2{
+	display: none;
+    float: left;
+}
+
+div.gamedata2 ul{
+	list-style-type: none;
+	text-align: left;
+	font-family: Sorry Not Sorry;
+	font-size: 32px;
+	color: #ffffff;
+}
+
+input.gamedatainput{
+	color: #ffffff;
+	background-color: #222222;
+	font-family: Roboto;
+	font-size: 20px;
+	text-align: left;
+	width: 160px;
+	opacity: 0.8;
+	border: 0px;
+}
+
+.goldvalue{
+    display: none;
+    color: white;
+    font-family: Sorry Not Sorry;
+    font-size: 32px;
+    float: left;
+    position: absolute;
+    padding-left: 10px;
+}
+
+#gamedatabuffs{
+    display: none;
+    color: white;
+    float: left;
+    position: absolute;
+    padding-left: 10px;
+}
+
+#gamedatabuffs ul{
+    list-style-type: none;
+	text-align: left;
+	font-family: Sorry Not Sorry;
+	font-size: 24px;
+	color: #ffffff;
+}
+
+div.datadescription{
+	display: none;
+    float: right;
+    width: 600px;
+    padding-right: 50px;
+}
+
+div.datatitle{
+	color: #ffffff;
+	font-family: Sorry Not Sorry;
+	font-size: 64px;
+	text-align: right;
+}
+
+div.datadesc{
+	color: #ffffff;
+	font-family: Roboto;
+	font-size: 24px;
+	text-align: right;
+}
+
+
+#bg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+}
+#bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+
+
+
+
+
+
+
+
+
