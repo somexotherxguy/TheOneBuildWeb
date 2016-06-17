@@ -23,13 +23,6 @@
     splash_url = splash_url.concat(almost);
     document.getElementById('bgimg').src = splash_url;
 
-    //get all the information from the api and display it
-    get_base_stats();
-    change_passive();
-    change_abilities();
-    changePassive();
-    initializeShop();
-
     //Event Handlers
     document.getElementById('champsearch2form').addEventListener('submit', function(e) { on_search(e);});
     var filters = document.getElementsByClassName('filter');
@@ -58,7 +51,7 @@
         rune_handlers[i].id = 'runeselect' + i;
         rune_handlers[i].addEventListener('click', highlight_rune);
     }
-    document.getElementById('passiveicon').addEventListener('click', changePassive);
+    document.getElementById('passiveicon').addEventListener('click', clickPassive);
     document.getElementById('abilityoneicon').addEventListener('click', changeAbilityOne);
     document.getElementById('abilitytwoicon').addEventListener('click', changeAbilityTwo);
     document.getElementById('abilitythreeicon').addEventListener('click', changeAbilityThree);
@@ -79,6 +72,64 @@
     document.getElementById('towers').addEventListener('keyup', sum_gold);
     document.getElementById('jungleclears').addEventListener('keyup', sum_gold);
     console.log(document.getElementById('kills').value);
+    
+    //get the full item json from ddragon
+    var item_json;
+    
+    $.ajax({
+        url:  'http://ddragon.leagueoflegends.com/cdn/6.12.1/data/en_US/item.json',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            
+        },
+        success: function (json) {
+            item_json = json;
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            
+        }
+    });
+    
+    //get the full champion json from Riot API
+    var passive_json;
+    $.ajax({
+        url:  'http://theonebuild-env.us-west-2.elasticbeanstalk.com/passive/',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            
+        },
+        success: function (json) {
+            passive_json = json;
+            change_passive(passive_json);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            
+        }
+    });
+    
+    var ability_json;
+    $.ajax({
+        url:  'http://theonebuild-env.us-west-2.elasticbeanstalk.com/spells/',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            
+        },
+        success: function (json) {
+            ability_json = json;
+            change_abilities(ability_json);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            
+        }
+    });
+    
+    //get all the information from the api and display it
+    get_base_stats();
+    initializeShop();
+    
     
     //Game Data Variables 59.4 44.4
     var kill_worth = 300;
@@ -131,20 +182,21 @@
 
     function initializeShop(){
         $.ajax({
-            url:  'https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=all&api_key=5bafa309-a330-491a-aaae-49498b8ea57a',
+            url:  'http://ddragon.leagueoflegends.com/cdn/6.12.1/data/en_US/item.json',
             type: 'GET',
             dataType: 'json',
             data: {
-
+                
             },
             success: function (json) {
+                item_json = json;
                 var shop_array = [];
                 var item_info = [];
                 
-                for(var key in json.data){
-                    if(json.data.hasOwnProperty(key)){	
+                for(var key in item_json.data){
+                    if(item_json.data.hasOwnProperty(key)){	
                         shop_array.push(key);
-                        item_info.push(json.data[key]);
+                        item_info.push(item_json.data[key]);
                     }
                     for(k=0; k < shop_array.length; k++){
                         if(item_info[k].maps["11"] == false){
@@ -201,21 +253,23 @@
                     }
                     j++;
                 }
-                
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                
             }
         });
+        
     }
     function test(e){
         document.body.style.backgroundImage = "url(http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg)";
     }
 
     function on_search(e){
-        e.preventDefault();
         //champion icon
         console.log(document.getElementById('champsearch2'));
         var champname = document.getElementById('champsearch2').value;
+        var re = /(\b[a-z](?!\s))/g; 
+        champname = champname.replace(re, function(x){return x.toUpperCase();});
         if(champname == 'cocaine'){
             champname = document.getElementById('champsearch').value;
             document.getElementById('champsearch2').value = champname;
@@ -244,117 +298,107 @@
         document.getElementById('welcometitle').innerHTML = "Nice choice. Now let's get down to business.";
         document.getElementById('welcometext').innerHTML = ""+name+"'s base stats are on the left and their abilities are below. To start planning your build, we'll need some information. Use the tabs on the right to add runes, scores, and items. Your stats and scalings will update as you go.";
         
-        
-        /*get base stats from API*/
-        setTimeout(get_base_stats(), 1);
-        setTimeout(change_passive(), 1);
-        setTimeout(change_abilities(), 1);
-        setTimeout(changePassive(), 1);
-        initializeShop();
-        
+        window.localStorage.setItem('champname', document.getElementById('champsearch2').value);
     }
 
         
     function get_base_stats(){
-            var champ_name = "";
-            champ_name = $("#champsearch2").val();
-            if(champ_name=="cocaine"){
-                champ_name = $("#champsearch").val();
-            }
-            console.log(champ_name);
-            $.ajax({
-                url: 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=stats&api_key=5bafa309-a330-491a-aaae-49498b8ea57a',
-                type: 'GET',
-                dataType: 'json',
-                data:{},
-                success: function (json) {
-                    var champname_nospaces = champ_name.replace(" ", "");
-                    champname_nospaces = champname_nospaces.toLowerCase().trim();
-            
-                    pass = json.data[champ_name].stats;
-                    console.log(pass);
-            
-                    var stats = {attackrange:"0",mpperlevel:"0",mp:"0",attackdamage:"0",hp:"0",hpperlevel:"0",attackdamageperlevel:"0",armor:"0",mpregenperlevel:"0",
-                                 hpregen:"0",critperlevel:"0",spellblockperlevel:"0",mpregen:"0",
-                                 attackspeedperlevel:"0",spellblock:"0",movespeed:"0",attackspeedoffset:"0",crit:"0",hpregenperlevel:"0",armorperlevel:"0"};
-            
-                    for(var property in stats)
-                    {
-                        if(stats.hasOwnProperty(property))
-                        {
-                            stats[property]=json.data[champ_name].stats[property];
-                        }
-                    }
-                    
-                    //document.getElementById("mpperlevel").value=stats.mpperlevel;
-                    document.getElementById("mana").innerHTML = Math.round(stats.mp);
-                    document.getElementById("attackdamage").innerHTML = Math.round(stats.attackdamage);
-                    document.getElementById("health").innerHTML = Math.round(stats.hp);
-                    //document.getElementById("hpperlevel").value=stats.hpperlevel;
-                    //document.getElementById("attackdamageperlevel").value=stats.attackdamageperlevel;
-                    document.getElementById("armor").innerHTML = Math.round(stats.armor);
-                    //document.getElementById("mpregenperlevel").value=stats.mpregenperlevel;
-                    document.getElementById("healthregen").innerHTML = Math.round(stats.hpregen);
-                    //document.getElementById("critperlevel").value=stats.critperlevel;
-                    //document.getElementById("mrperlevel").value=stats.spellblockperlevel;
-                    document.getElementById("manaregen").innerHTML = Math.round(stats.mpregen);
-                    //document.getElementById("attackspeedperlevel").value=stats.attackspeedperlevel;
-                    document.getElementById("magicresist").innerHTML = Math.round(stats.spellblock);
-                    document.getElementById("movespeed").innerHTML = Math.round(stats.movespeed);
-                    document.getElementById("criticalchance").innerHTML = Math.round(stats.crit);
-                    //document.getElementById("hpregenperlevel").value=stats.hpregenperlevel;
-                    //document.getElementById("armorperlevel").value=stats.armorperlevel;
-                    //document.getElementById("attackspeedoffset").value=stats.attackspeedoffset;
-                }
-            })
-    }
-
-    function change_passive(){
         var champ_name = "";
         champ_name = $("#champsearch2").val();
+        var re = /(\b[a-z](?!\s))/g; 
+        champ_name = champ_name.replace(re, function(x){return x.toUpperCase();});
+        if(champ_name=="cocaine"){
+            champ_name = $("#champsearch").val();
+        }
+        console.log(champ_name);
+        var champname_nospaces = champ_name.replace(" ", "");
+        champname_nospaces = champname_nospaces.toLowerCase().trim();
+        $.ajax({
+            url:  'http://ddragon.leagueoflegends.com/cdn/6.12.1/data/en_US/champion.json',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                
+            },
+            success: function (json) {
+                champ_json = json;
+                pass = champ_json.data[champ_name].stats;
+                console.log(pass);
+
+                var stats = {attackrange:"0",mpperlevel:"0",mp:"0",attackdamage:"0",hp:"0",hpperlevel:"0",attackdamageperlevel:"0",armor:"0",mpregenperlevel:"0",
+                             hpregen:"0",critperlevel:"0",spellblockperlevel:"0",mpregen:"0",
+                             attackspeedperlevel:"0",spellblock:"0",movespeed:"0",attackspeedoffset:"0",crit:"0",hpregenperlevel:"0",armorperlevel:"0"};
+
+                for(var property in stats)
+                {
+                    if(stats.hasOwnProperty(property))
+                    {
+                        stats[property]=champ_json.data[champ_name].stats[property];
+                    }
+                }
+                
+                //document.getElementById("mpperlevel").value=stats.mpperlevel;
+                document.getElementById("mana").innerHTML = Math.round(stats.mp);
+                document.getElementById("attackdamage").innerHTML = Math.round(stats.attackdamage);
+                document.getElementById("health").innerHTML = Math.round(stats.hp);
+                //document.getElementById("hpperlevel").value=stats.hpperlevel;
+                //document.getElementById("attackdamageperlevel").value=stats.attackdamageperlevel;
+                document.getElementById("armor").innerHTML = Math.round(stats.armor);
+                //document.getElementById("mpregenperlevel").value=stats.mpregenperlevel;
+                document.getElementById("healthregen").innerHTML = Math.round(stats.hpregen);
+                //document.getElementById("critperlevel").value=stats.critperlevel;
+                //document.getElementById("mrperlevel").value=stats.spellblockperlevel;
+                document.getElementById("manaregen").innerHTML = Math.round(stats.mpregen);
+                //document.getElementById("attackspeedperlevel").value=stats.attackspeedperlevel;
+                document.getElementById("magicresist").innerHTML = Math.round(stats.spellblock);
+                document.getElementById("movespeed").innerHTML = Math.round(stats.movespeed);
+                document.getElementById("criticalchance").innerHTML = Math.round(stats.crit);
+                //document.getElementById("hpregenperlevel").value=stats.hpregenperlevel;
+                //document.getElementById("armorperlevel").value=stats.armorperlevel;
+                //document.getElementById("attackspeedoffset").value=stats.attackspeedoffset;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                
+            }
+        });
+    }
+
+    function change_passive(json){
+        var champ_name = "";
+        champ_name = $("#champsearch2").val();
+        var re = /(\b[a-z](?!\s))/g; 
+        champ_name = champ_name.replace(re, function(x){return x.toUpperCase();});
         if(champ_name=="cocaine"){
             champ_name = $("#champsearch").val();
         }
         if(champ_name !== ""){
-        
-            $.ajax({
-                url:  'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=passive&api_key=5bafa309-a330-491a-aaae-49498b8ea57a',
-                type: 'GET',
-                dataType: 'json',
-                data: {
-
-                },
-                success: function (json) {
-                    var champ_name_nospaces = champ_name.replace(" ", "");
-                    champ_name_nospaces = champ_name_nospaces.toLowerCase().trim();
-                    
-                    <!-- changing passive icon -->
-                    pass = json.data[champ_name].passive.image.full;
-                    console.log(pass);
-                    
-                    var passive = document.getElementById('passiveicon');
-                    
-                    var passive_url = "http://ddragon.leagueoflegends.com/cdn/5.23.1/img/passive/";
-                    var almost_two = pass.concat(".png");
-                    passive.src = passive_url.concat(pass);
-                    
-                    <!-- passive description -->
-                    var pass_text = document.getElementById('abilitytext');
-                    //pass_text.innerHTML = json.data[champ_name].passive.description;
-                    
-                    var pass_title = document.getElementById('abilityname');
-                    pass_title.innerHTML = json.data[champ_name].passive.name;
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    
-                }
-            });
+            var champ_name_nospaces = champ_name.replace(" ", "");
+            champ_name_nospaces = champ_name_nospaces.toLowerCase().trim();
+            
+            <!-- changing passive icon -->
+            pass = json.data[champ_name].passive.image.full;
+            console.log(pass);
+            
+            var passive = document.getElementById('passiveicon');
+            
+            var passive_url = "http://ddragon.leagueoflegends.com/cdn/5.23.1/img/passive/";
+            var almost_two = pass.concat(".png");
+            passive.src = passive_url.concat(pass);
+            
+            <!-- passive description -->
+            var pass_text = document.getElementById('abilitytext');
+            pass_text.innerHTML = json.data[champ_name].passive.description;
+            
+            var pass_title = document.getElementById('abilityname');
+            pass_title.innerHTML = json.data[champ_name].passive.name;
         }
     }
 
     function change_abilities(){
         var champ_name = "";
         champ_name = $("#champsearch2").val();
+        var re = /(\b[a-z](?!\s))/g; 
+        champ_name = champ_name.replace(re, function(x){return x.toUpperCase();});
         if(champ_name=="cocaine"){
             champ_name = $("#champsearch").val();
         }
@@ -407,39 +451,33 @@
             });
         }
     }
-
-    function changePassive(){
+    
+    function clickPassive(){
         var champ_name = "";
         champ_name = $("#champsearch2").val();
+        var re = /(\b[a-z](?!\s))/g; 
+        champ_name = champ_name.replace(re, function(x){return x.toUpperCase();});
         if(champ_name=="cocaine"){
             champ_name = $("#champsearch").val();
         }
         if(champ_name !== ""){	
-            $.ajax({
-                url:  'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=passive&api_key=5bafa309-a330-491a-aaae-49498b8ea57a',
-                type: 'GET',
-                dataType: 'json',
-                data: {},
-                success: function (json) {
-                    
-                    var champ_name_nospaces = champ_name.replace(" ", "");
-                    champ_name_nospaces = champ_name_nospaces.toLowerCase().trim();
-        
-                    <!-- passive description -->
-                    var pass_text = document.getElementById('abilitytext');
-                    pass_text.innerHTML = json.data[champ_name].passive.description;
-                                
-                    var pass_title = document.getElementById('abilityname');
-                    pass_title.innerHTML = json.data[champ_name].passive.name;
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {}
-            });
+            var champ_name_nospaces = champ_name.replace(" ", "");
+            champ_name_nospaces = champ_name_nospaces.toLowerCase().trim();
+
+            <!-- passive description -->
+            var pass_text = document.getElementById('abilitytext');
+            pass_text.innerHTML = passive_json.data[champ_name].passive.description;
+                        
+            var pass_title = document.getElementById('abilityname');
+            pass_title.innerHTML = passive_json.data[champ_name].passive.name;
         }				
     }
             
     function changeAbilityOne(){
         var champ_name = "";
         champ_name = $("#champsearch2").val();
+        var re = /(\b[a-z](?!\s))/g; 
+        champ_name = champ_name.replace(re, function(x){return x.toUpperCase();});
         if(champ_name=="cocaine"){
             champ_name = $("#champsearch").val();
         }
@@ -540,6 +578,8 @@
     function changeAbilityTwo(){
         var champ_name = "";
         champ_name = $("#champsearch2").val();
+        var re = /(\b[a-z](?!\s))/g; 
+        champ_name = champ_name.replace(re, function(x){return x.toUpperCase();});
         if(champ_name=="cocaine"){
             champ_name = $("#champsearch").val();
         }
@@ -642,6 +682,8 @@
     function changeAbilityThree(){
         var champ_name = "";
         champ_name = $("#champsearch2").val();
+        var re = /(\b[a-z](?!\s))/g; 
+        champ_name = champ_name.replace(re, function(x){return x.toUpperCase();});
         if(champ_name=="cocaine"){
             champ_name = $("#champsearch").val();
         }
@@ -745,6 +787,8 @@
     function changeAbilityFour(){
         var champ_name = "";
         champ_name = $("#champsearch2").val();
+        var re = /(\b[a-z](?!\s))/g; 
+        champ_name = champ_name.replace(re, function(x){return x.toUpperCase();});
         if(champ_name=="cocaine"){
             champ_name = $("#champsearch").val();
         }
@@ -895,275 +939,263 @@
     }
 
     function shop_filter(){
-        $.ajax({
-            url:  'https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=all&api_key=5bafa309-a330-491a-aaae-49498b8ea57a',
-            type: 'GET',
-            dataType: 'json',
-            data: {
-
-            },
-            success: function (json) {
-                var shop_array = [];
-                var item_info = [];
-                var tag_info = [];
-                var shop_array_modified = [];
-                
-                for(var key in json.data){
-                    if(json.data.hasOwnProperty(key)){	
-                        shop_array.push(key);
-                        item_info.push(json.data[key]);
-                        tag_info.push(json.data[key].tags);
-                    }
-                }	
-                for(k=0; k < shop_array.length; k++){
-                    if(item_info[k].maps["11"] == false){
-                        shop_array.splice(k,1);
-                        item_info.splice(k,1);
-                        tag_info.splice(k,1);
-                    }
-                }
-                for(k=0; k < shop_array.length; k++){
-                    if(item_info[k].consumed == true){
-                        shop_array.splice(k,1);
-                        item_info.splice(k,1);
-                        tag_info.splice(k,1);
-                    }
-                }
-                for(k=0; k < shop_array.length; k++){
-                    if(item_info[k].group == "BootsDistortion"){
-                        shop_array.splice(k,1);
-                        item_info.splice(k,1);
-                        tag_info.splice(k,1);
-                    }
-                }
-                for(k=0; k < shop_array.length; k++){
-                    if(item_info[k].group == "BootsCaptain"){
-                        shop_array.splice(k,1);
-                        item_info.splice(k,1);
-                        tag_info.splice(k,1);
-                    }
-                }
-                for(k=0; k < shop_array.length; k++){
-                    if(item_info[k].group == "BootsAlacrity"){
-                        shop_array.splice(k,1);
-                        item_info.splice(k,1);
-                        tag_info.splice(k,1);
-                    }
-                }
-                for(k=0; k < shop_array.length; k++){
-                    if(item_info[k].group == "BootsFuror"){
-                        shop_array.splice(k,1);
-                        item_info.splice(k,1);
-                        tag_info.splice(k,1);
-                    }
-                }
-                
-                var check_health = document.getElementById('health_filter').checked;
-                var check_MR = document.getElementById('MR_filter').checked;
-                var check_armor = document.getElementById('armor_filter').checked;
-                var check_AD = document.getElementById('AD_filter').checked;
-                var check_AS = document.getElementById('AS_filter').checked;
-                var check_crit = document.getElementById('crit_filter').checked;
-                var check_lifesteal = document.getElementById('lifesteal_filter').checked;
-                var check_AP = document.getElementById('AP_filter').checked;
-                var check_CDR = document.getElementById('CDR_filter').checked;
-                var check_mana = document.getElementById('mana_filter').checked;
-                var check_mana_regen = document.getElementById('mana_regen_filter').checked;
-                var check_MS = document.getElementById('MS_filter').checked;
-                
-                
-                for(k=0; k < shop_array.length; k++){
-                    if(check_health == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'Health'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-                
-                for(k=0; k < shop_array.length; k++){
-                    if(check_MR == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'SpellBlock'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-                
-                for(k=0; k < shop_array.length; k++){
-                    if(check_armor == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'Armor'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-                
-                for(k=0; k < shop_array.length; k++){
-                    if(check_AD == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'Damage'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-
-                for(k=0; k < shop_array.length; k++){
-                    if(check_AS == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'AttackSpeed'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-                
-                for(k=0; k < shop_array.length; k++){
-                    if(check_crit == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'CriticalStrike'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-
-                for(k=0; k < shop_array.length; k++){
-                    if(check_lifesteal == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'LifeSteal'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-
-                for(k=0; k < shop_array.length; k++){
-                    if(check_AP == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'SpellDamage'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-                
-                for(k=0; k < shop_array.length; k++){
-                    if(check_CDR == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'CooldownReduction'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-
-                for(k=0; k < shop_array.length; k++){
-                    if(check_mana == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'Mana'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-                
-                for(k=0; k < shop_array.length; k++){
-                    if(check_mana_regen == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'ManaRegen'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-                
-                for(k=0; k < shop_array.length; k++){
-                    if(check_MS == true){
-                        
-                        for(var tem in tag_info[k]){
-                            
-                            if(tag_info[k][tem] == 'NonbootsMovement' || tag_info[k][tem] == 'Boots'){
-                                shop_array_modified.push(shop_array[k]);
-                            }
-                            
-                        }
-                    }
-                }
-
-
-
-                    
-                
-                j=0;
-                for(i=0; i<72; i++){
-                    if(shop_array_modified[j] != undefined){
-                        var num = i.toString();
-                        var shop_icon_string = "shop_icon"
-                        var shop_id = shop_icon_string.concat(num);
-                        var item_url = "http://ddragon.leagueoflegends.com/cdn/6.10.1/img/item/";
-                        var temp = shop_array_modified[j];
-                        var mid_shop_array = temp.concat(".png");
-                        
-                        var shop_source = document.getElementById(shop_id);
-                        shop_source.src = item_url.concat(mid_shop_array);
-                        j++;
-                    }else{
-                        var num = i.toString();
-                        var shop_icon_string = "shop_icon"
-                        var shop_id = shop_icon_string.concat(num);
-                        
-                        var shop_source = document.getElementById(shop_id);
-                        shop_source.src = "icons/EmptyIcon_Item.png";
-                        j++;
-                    }
-
-                }
-                
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("error filtering the shop");
+        var shop_array = [];
+        var item_info = [];
+        var tag_info = [];
+        var shop_array_modified = [];
+        
+        for(var key in item_json.data){
+            if(item_json.data.hasOwnProperty(key)){	
+                shop_array.push(key);
+                item_info.push(item_json.data[key]);
+                tag_info.push(item_json.data[key].tags);
             }
-        });
+        }	
+        for(k=0; k < shop_array.length; k++){
+            if(item_info[k].maps["11"] == false){
+                shop_array.splice(k,1);
+                item_info.splice(k,1);
+                tag_info.splice(k,1);
+            }
+        }
+        for(k=0; k < shop_array.length; k++){
+            if(item_info[k].consumed == true){
+                shop_array.splice(k,1);
+                item_info.splice(k,1);
+                tag_info.splice(k,1);
+            }
+        }
+        for(k=0; k < shop_array.length; k++){
+            if(item_info[k].group == "BootsDistortion"){
+                shop_array.splice(k,1);
+                item_info.splice(k,1);
+                tag_info.splice(k,1);
+            }
+        }
+        for(k=0; k < shop_array.length; k++){
+            if(item_info[k].group == "BootsCaptain"){
+                shop_array.splice(k,1);
+                item_info.splice(k,1);
+                tag_info.splice(k,1);
+            }
+        }
+        for(k=0; k < shop_array.length; k++){
+            if(item_info[k].group == "BootsAlacrity"){
+                shop_array.splice(k,1);
+                item_info.splice(k,1);
+                tag_info.splice(k,1);
+            }
+        }
+        for(k=0; k < shop_array.length; k++){
+            if(item_info[k].group == "BootsFuror"){
+                shop_array.splice(k,1);
+                item_info.splice(k,1);
+                tag_info.splice(k,1);
+            }
+        }
+        
+        var check_health = document.getElementById('health_filter').checked;
+        var check_MR = document.getElementById('MR_filter').checked;
+        var check_armor = document.getElementById('armor_filter').checked;
+        var check_AD = document.getElementById('AD_filter').checked;
+        var check_AS = document.getElementById('AS_filter').checked;
+        var check_crit = document.getElementById('crit_filter').checked;
+        var check_lifesteal = document.getElementById('lifesteal_filter').checked;
+        var check_AP = document.getElementById('AP_filter').checked;
+        var check_CDR = document.getElementById('CDR_filter').checked;
+        var check_mana = document.getElementById('mana_filter').checked;
+        var check_mana_regen = document.getElementById('mana_regen_filter').checked;
+        var check_MS = document.getElementById('MS_filter').checked;
+        
+        
+        for(k=0; k < shop_array.length; k++){
+            if(check_health == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'Health'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+        
+        for(k=0; k < shop_array.length; k++){
+            if(check_MR == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'SpellBlock'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+        
+        for(k=0; k < shop_array.length; k++){
+            if(check_armor == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'Armor'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+        
+        for(k=0; k < shop_array.length; k++){
+            if(check_AD == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'Damage'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+
+        for(k=0; k < shop_array.length; k++){
+            if(check_AS == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'AttackSpeed'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+        
+        for(k=0; k < shop_array.length; k++){
+            if(check_crit == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'CriticalStrike'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+
+        for(k=0; k < shop_array.length; k++){
+            if(check_lifesteal == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'LifeSteal'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+
+        for(k=0; k < shop_array.length; k++){
+            if(check_AP == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'SpellDamage'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+        
+        for(k=0; k < shop_array.length; k++){
+            if(check_CDR == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'CooldownReduction'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+
+        for(k=0; k < shop_array.length; k++){
+            if(check_mana == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'Mana'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+        
+        for(k=0; k < shop_array.length; k++){
+            if(check_mana_regen == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'ManaRegen'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+        
+        for(k=0; k < shop_array.length; k++){
+            if(check_MS == true){
+                
+                for(var tem in tag_info[k]){
+                    
+                    if(tag_info[k][tem] == 'NonbootsMovement' || tag_info[k][tem] == 'Boots'){
+                        shop_array_modified.push(shop_array[k]);
+                    }
+                    
+                }
+            }
+        }
+
+
+
+            
+        
+        j=0;
+        for(i=0; i<72; i++){
+            if(shop_array_modified[j] != undefined){
+                var num = i.toString();
+                var shop_icon_string = "shop_icon"
+                var shop_id = shop_icon_string.concat(num);
+                var item_url = "http://ddragon.leagueoflegends.com/cdn/6.10.1/img/item/";
+                var temp = shop_array_modified[j];
+                var mid_shop_array = temp.concat(".png");
+                
+                var shop_source = document.getElementById(shop_id);
+                shop_source.src = item_url.concat(mid_shop_array);
+                j++;
+            }else{
+                var num = i.toString();
+                var shop_icon_string = "shop_icon"
+                var shop_id = shop_icon_string.concat(num);
+                
+                var shop_source = document.getElementById(shop_id);
+                shop_source.src = "icons/EmptyIcon_Item.png";
+                j++;
+            }
+
+        }
     }
 
+    //Adds and item to the inventory and subtracts the gold from the gold total
+    // -- updated to not need an api call
     function add_inventory(){ 
         var item_bought = false;
         var shop_image = document.getElementById(this.id);
@@ -1178,86 +1210,73 @@
         item_url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item/" + item_id + "?itemData=all&api_key=5bafa309-a330-491a-aaae-49498b8ea57a";
         
         var item_cost;
-        $.ajax({
-            url:  item_url,
-            type: 'GET',
-            dataType: 'json',
-            data: {
+        item_cost = item_json.data[item_id].gold.total;
+        var iven_zero = document.getElementById('inventory_item0');
+        var iven_one = document.getElementById('inventory_item1');
+        var iven_two = document.getElementById('inventory_item2');
+        var iven_three = document.getElementById('inventory_item3');
+        var iven_four = document.getElementById('inventory_item4');
+        var iven_five = document.getElementById('inventory_item5');
+        
+        var gold_temp = [];
+        var gold_totals = document.getElementsByClassName('goldamt');
+        for(var i = 0; i < gold_totals.length; i++){
+            gold_temp[i] = gold_totals[i].innerHTML;
+            gold_temp[i] = parseInt(gold_temp[i], 10);
+        }
+        
+        var zero_src = iven_zero.src;
+        var one_src = iven_one.src;
+        var two_src = iven_two.src;
+        var three_src = iven_three.src;
+        var four_src = iven_four.src;
+        var five_src = iven_five.src;
 
-            },
-            success: function (json) {	
-                item_cost = json.gold.total;
-                var iven_zero = document.getElementById('inventory_item0');
-                var iven_one = document.getElementById('inventory_item1');
-                var iven_two = document.getElementById('inventory_item2');
-                var iven_three = document.getElementById('inventory_item3');
-                var iven_four = document.getElementById('inventory_item4');
-                var iven_five = document.getElementById('inventory_item5');
-                
-                var gold_temp = [];
-                var gold_totals = document.getElementsByClassName('goldamt');
-                for(var i = 0; i < gold_totals.length; i++){
-                    gold_temp[i] = gold_totals[i].innerHTML;
-                    gold_temp[i] = parseInt(gold_temp[i], 10);
-                }
-                
-                var zero_src = iven_zero.src;
-                var one_src = iven_one.src;
-                var two_src = iven_two.src;
-                var three_src = iven_three.src;
-                var four_src = iven_four.src;
-                var five_src = iven_five.src;
-
-                var src_temp_zero = zero_src.substr(zero_src.length - 25, zero_src.length);
-                var src_temp_one = one_src.substr(one_src.length - 25, one_src.length);
-                var src_temp_two = two_src.substr(two_src.length - 25, two_src.length);
-                var src_temp_three = three_src.substr(three_src.length - 25, three_src.length);
-                var src_temp_four = four_src.substr(four_src.length - 25, four_src.length);
-                var src_temp_five = five_src.substr(five_src.length - 25, five_src.length);
-                
-                var empty_item = "/icons/EmptyIcon_Item.png";
-                if((gold_temp[0] - item_cost) > 0){
-                    if(src_temp_zero == empty_item){
-                        iven_zero.src = clicked_image;
+        var src_temp_zero = zero_src.substr(zero_src.length - 25, zero_src.length);
+        var src_temp_one = one_src.substr(one_src.length - 25, one_src.length);
+        var src_temp_two = two_src.substr(two_src.length - 25, two_src.length);
+        var src_temp_three = three_src.substr(three_src.length - 25, three_src.length);
+        var src_temp_four = four_src.substr(four_src.length - 25, four_src.length);
+        var src_temp_five = five_src.substr(five_src.length - 25, five_src.length);
+        
+        var empty_item = "/icons/EmptyIcon_Item.png";
+        if((gold_temp[0] - item_cost) >= 0){
+            if(src_temp_zero == empty_item){
+                iven_zero.src = clicked_image;
+                item_bought = true;
+            }else{
+                if(src_temp_one == empty_item){
+                    iven_one.src = clicked_image;
+                    item_bought = true;
+                }else{
+                    if(src_temp_two == empty_item){
+                        iven_two.src = clicked_image;
                         item_bought = true;
                     }else{
-                        if(src_temp_one == empty_item){
-                            iven_one.src = clicked_image;
+                        if(src_temp_three == empty_item){
+                            iven_three.src = clicked_image;
                             item_bought = true;
                         }else{
-                            if(src_temp_two == empty_item){
-                                iven_two.src = clicked_image;
+                            if(src_temp_four == empty_item){
+                                iven_four.src = clicked_image;
                                 item_bought = true;
                             }else{
-                                if(src_temp_three == empty_item){
-                                    iven_three.src = clicked_image;
+                                if(src_temp_five == empty_item){
+                                    iven_five.src = clicked_image;
                                     item_bought = true;
-                                }else{
-                                    if(src_temp_four == empty_item){
-                                        iven_four.src = clicked_image;
-                                        item_bought = true;
-                                    }else{
-                                        if(src_temp_five == empty_item){
-                                            iven_five.src = clicked_image;
-                                            item_bought = true;
-                                        }
-                                    }
                                 }
                             }
-                        }	
+                        }
                     }
-                }
-
-                if(item_bought === true){
-                    for(var i = 0; i < gold_totals.length; i++){
-                        gold_totals[i].innerHTML = gold_temp[i] - item_cost;
-                    }
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("error getting Item data!");
+                }	
             }
-        });
+        }
+
+        if(item_bought === true){
+            for(var i = 0; i < gold_totals.length; i++){
+                gold_totals[i].innerHTML = gold_temp[i] - item_cost;
+            }
+        }
         
         
     }
@@ -1308,6 +1327,8 @@
         console.log(ap_before_percentage);
     }
     
+    //Removes items from the inventory and gives back the gold from the item
+    // -- updated to no longer need an api call
     function remove_inventory(){
         var inven_image = document.getElementById(this.id);
         var image_source = inven_image.src;
@@ -1327,25 +1348,11 @@
         item_url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item/" + remove_id + "?itemData=all&api_key=5bafa309-a330-491a-aaae-49498b8ea57a";
         
         var item_cost;
-        $.ajax({
-            url:  item_url,
-            type: 'GET',
-            dataType: 'json',
-            data: {
-
-            },
-            success: function (json) {	
-                //console.log(json.gold.total);
-                item_cost = json.gold.total;
-                
-                for(var i = 0; i < gold_totals.length; i++){
-                    gold_totals[i].innerHTML = gold_temp[i] + item_cost;
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("error getting Item data!");
-            }
-        });
+        item_cost = item_json.data[remove_id].gold.total;
+        
+        for(var i = 0; i < gold_totals.length; i++){
+            gold_totals[i].innerHTML = gold_temp[i] + item_cost;
+        }
     }
 
     function item_stats(){
@@ -1363,24 +1370,8 @@
         
         var src_temp = image_source.substr(image_source.length - 25, image_source.length);
 
-            
-        
         if(src_temp != "/icons/EmptyIcon_Item.png"){
-            $.ajax({
-                url:  item_url,
-                type: 'GET',
-                dataType: 'json',
-                data: {
-
-                },
-                success: function (json) {	
-                    //console.log(json.gold.total);
-                    stats.innerHTML = "Gold: " + json.gold.total + "      |      " + json.sanitizedDescription;
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("error getting Summoner data!");
-                }
-            });
+            stats.innerHTML = "Gold: " + item_json.data[item_id].gold.total + '<br>' + item_json.data[item_id].description;
         }else{
             stats.innerHTML = "Empty Item Slot"
         }

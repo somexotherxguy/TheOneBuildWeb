@@ -73,6 +73,16 @@ div.inventory{
     padding-top: 30px;
 }
 
+#hoverinfo{
+    pointer-events: none;
+}
+
+a:link{
+    text-decoration: none;
+    font-weight: normal;
+    color: white;
+}
+
 div.shop{
 	display: none;
 	color: white;
