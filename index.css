@@ -1,0 +1,118 @@
+/*Fonts*/
+@font-face {
+	font-family: Sorry Not Sorry;
+	src: url('Fonts/KGSorryNotSorry.ttf');
+}
+
+@font-face {
+	font-family: Roboto;
+	src: url('Fonts/Roboto-Light.ttf');
+}
+
+/*Grid View*/
+* {
+    box-sizing: border-box;
+}
+.row:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+}
+.col-1 {width: 13%;}
+.col-2 {width: 74%;}
+.col-3 {width: 13%;}
+
+/*Text Box Styling*/
+input:focus{
+	outline: none;
+	border-color: #ffffff;
+	box-shadow: 0 0 5px #ffffff;
+}
+
+/*Background*/
+body{
+	background-image: url(Pictures/baron.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+	/*background-size: 100%;
+	background-repeat: no-repeat;
+	margin: 0px;*/
+}
+
+/*Top Bar*/
+div.theonebuild{
+	color: #ffffff;
+	font-family: Sorry Not Sorry;
+	font-size: 64px;
+	text-align: center;
+}
+
+div.intro{
+	color: #ffffff;
+	font-family: Roboto;
+	font-size: 16px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	width: 550px;
+}
+
+div.transbox{
+	width: 100%;
+	height: 140px;
+	background-color: #000000;
+	opacity: 0.8;
+	padding: 5px;
+	visibility: visible;
+}
+
+input.champsearch{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 400px;
+	padding: 100px;
+	visibility: visible;
+	color: #ffffff;
+	background-color: #000000;
+	font-family: Roboto;
+	font-size: 24px;
+	text-align: center;
+	width: 300px;
+	padding: 3px;
+	opacity: 0.8;
+	border: 0px;
+}
+
+#bg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+}
+#bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+
+
+
+
+
+
+
+
+
