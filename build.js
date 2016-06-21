@@ -249,7 +249,7 @@
                     if(i < shop_array.length){
                         shop_source.src = item_url.concat(mid_shop_array);
                     } else {
-                        shop_source.src = "icons/EmptyIcon_Item.png";
+                        shop_source.src = "Icons/EmptyIcon_Item.png";
                     }
                     j++;
                 }
@@ -1187,7 +1187,7 @@
                 var shop_id = shop_icon_string.concat(num);
                 
                 var shop_source = document.getElementById(shop_id);
-                shop_source.src = "icons/EmptyIcon_Item.png";
+                shop_source.src = "Icons/EmptyIcon_Item.png";
                 j++;
             }
 
@@ -1239,7 +1239,7 @@
         var src_temp_four = four_src.substr(four_src.length - 25, four_src.length);
         var src_temp_five = five_src.substr(five_src.length - 25, five_src.length);
         
-        var empty_item = "/icons/EmptyIcon_Item.png";
+        var empty_item = "/Icons/EmptyIcon_Item.png";
         if((gold_temp[0] - item_cost) >= 0){
             if(src_temp_zero == empty_item){
                 iven_zero.src = clicked_image;
@@ -1332,7 +1332,7 @@
     function remove_inventory(){
         var inven_image = document.getElementById(this.id);
         var image_source = inven_image.src;
-        inven_image.src = "icons/EmptyIcon_Item.png";
+        inven_image.src = "Icons/EmptyIcon_Item.png";
 
         var gold_temp = [];
         var gold_totals = document.getElementsByClassName('goldamt');
@@ -1370,7 +1370,7 @@
         
         var src_temp = image_source.substr(image_source.length - 25, image_source.length);
 
-        if(src_temp != "/icons/EmptyIcon_Item.png"){
+        if(src_temp != "/Icons/EmptyIcon_Item.png"){
             stats.innerHTML = "Gold: " + item_json.data[item_id].gold.total + '<br>' + item_json.data[item_id].description;
         }else{
             stats.innerHTML = "Empty Item Slot"
