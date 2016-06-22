@@ -13,12 +13,12 @@
     var icon = document.getElementById('champicon');
     
     //need to grab latest patch number and insert here
-    var icon_url = "http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/";
+    var icon_url = "https://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/";
     var almost = name.concat(".png");
     icon.src = icon_url.concat(almost);
     
     //splash art
-    var splash_url = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/";
+    var splash_url = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/";
     almost = name.concat("_0.jpg");
     splash_url = splash_url.concat(almost);
     document.getElementById('bgimg').src = splash_url;
@@ -77,7 +77,7 @@
     var item_json;
     
     $.ajax({
-        url:  'http://ddragon.leagueoflegends.com/cdn/6.12.1/data/en_US/item.json',
+        url:  'https://ddragon.leagueoflegends.com/cdn/6.12.1/data/en_US/item.json',
         type: 'GET',
         dataType: 'json',
         data: {
@@ -94,7 +94,7 @@
     //get the full champion json from Riot API
     var passive_json;
     $.ajax({
-        url:  'http://theonebuild-env.us-west-2.elasticbeanstalk.com/passive/',
+        url:  'https://theonebuild-env.us-west-2.elasticbeanstalk.com/passive/',
         type: 'GET',
         dataType: 'json',
         data: {
@@ -111,7 +111,7 @@
     
     var ability_json;
     $.ajax({
-        url:  'http://theonebuild-env.us-west-2.elasticbeanstalk.com/spells/',
+        url:  'https://theonebuild-env.us-west-2.elasticbeanstalk.com/spells/',
         type: 'GET',
         dataType: 'json',
         data: {
@@ -182,7 +182,7 @@
 
     function initializeShop(){
         $.ajax({
-            url:  'http://ddragon.leagueoflegends.com/cdn/6.12.1/data/en_US/item.json',
+            url:  'https://ddragon.leagueoflegends.com/cdn/6.12.1/data/en_US/item.json',
             type: 'GET',
             dataType: 'json',
             data: {
@@ -249,7 +249,7 @@
                     if(i < shop_array.length){
                         shop_source.src = item_url.concat(mid_shop_array);
                     } else {
-                        shop_source.src = "icons/EmptyIcon_Item.png";
+                        shop_source.src = "Icons/EmptyIcon_Item.png";
                     }
                     j++;
                 }
@@ -314,7 +314,7 @@
         var champname_nospaces = champ_name.replace(" ", "");
         champname_nospaces = champname_nospaces.toLowerCase().trim();
         $.ajax({
-            url:  'http://ddragon.leagueoflegends.com/cdn/6.12.1/data/en_US/champion.json',
+            url:  'https://ddragon.leagueoflegends.com/cdn/6.12.1/data/en_US/champion.json',
             type: 'GET',
             dataType: 'json',
             data: {
@@ -381,7 +381,7 @@
             
             var passive = document.getElementById('passiveicon');
             
-            var passive_url = "http://ddragon.leagueoflegends.com/cdn/5.23.1/img/passive/";
+            var passive_url = "https://ddragon.leagueoflegends.com/cdn/5.23.1/img/passive/";
             var almost_two = pass.concat(".png");
             passive.src = passive_url.concat(pass);
             
@@ -1174,7 +1174,7 @@
                 var num = i.toString();
                 var shop_icon_string = "shop_icon"
                 var shop_id = shop_icon_string.concat(num);
-                var item_url = "http://ddragon.leagueoflegends.com/cdn/6.10.1/img/item/";
+                var item_url = "https://ddragon.leagueoflegends.com/cdn/6.10.1/img/item/";
                 var temp = shop_array_modified[j];
                 var mid_shop_array = temp.concat(".png");
                 
@@ -1187,7 +1187,7 @@
                 var shop_id = shop_icon_string.concat(num);
                 
                 var shop_source = document.getElementById(shop_id);
-                shop_source.src = "icons/EmptyIcon_Item.png";
+                shop_source.src = "Icons/EmptyIcon_Item.png";
                 j++;
             }
 
@@ -1239,7 +1239,7 @@
         var src_temp_four = four_src.substr(four_src.length - 25, four_src.length);
         var src_temp_five = five_src.substr(five_src.length - 25, five_src.length);
         
-        var empty_item = "/icons/EmptyIcon_Item.png";
+        var empty_item = "/Icons/EmptyIcon_Item.png";
         if((gold_temp[0] - item_cost) >= 0){
             if(src_temp_zero == empty_item){
                 iven_zero.src = clicked_image;
@@ -1332,7 +1332,7 @@
     function remove_inventory(){
         var inven_image = document.getElementById(this.id);
         var image_source = inven_image.src;
-        inven_image.src = "icons/EmptyIcon_Item.png";
+        inven_image.src = "Icons/EmptyIcon_Item.png";
 
         var gold_temp = [];
         var gold_totals = document.getElementsByClassName('goldamt');
@@ -1370,7 +1370,7 @@
         
         var src_temp = image_source.substr(image_source.length - 25, image_source.length);
 
-        if(src_temp != "/icons/EmptyIcon_Item.png"){
+        if(src_temp != "/Icons/EmptyIcon_Item.png"){
             stats.innerHTML = "Gold: " + item_json.data[item_id].gold.total + '<br>' + item_json.data[item_id].description;
         }else{
             stats.innerHTML = "Empty Item Slot"
