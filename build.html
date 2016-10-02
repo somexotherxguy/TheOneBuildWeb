@@ -48,7 +48,7 @@
 			<div class="divider">
                 <div class="welcometitle"><span id="welcometitle">Nice choice. Here's your champ's Base Stats.</span></div>
                 <div class="welcometext"><span id="welcometext">To add runes, calculate gold, and create your build, use the tabs on the right side of the screen.
-                                                                Your stats will update as you go--you can come back and view them at any time.</span></div>
+                                                                Your stats will update as you go.</span></div>
                 
                 <div class="goldvalue"  id="gold1">
                     Gold:<span class="goldamt"> 500 </span>
@@ -56,12 +56,12 @@
                 
                 <div class="inventory" id="inventory">
                     <h1>Inventory</h1>
-                    <img class="inventoryicon" id="inventory_item0" src="icons/EmptyIcon_item.PNG">
-                    <img class="inventoryicon" id="inventory_item1" src="Icons/EmptyIcon_Item.png">
-                    <img class="inventoryicon" id="inventory_item2" src="Icons/EmptyIcon_Item.png">
-                    <img class="inventoryicon" id="inventory_item3" src="Icons/EmptyIcon_Item.png">
-                    <img class="inventoryicon" id="inventory_item4" src="Icons/EmptyIcon_Item.png">
-                    <img class="inventoryicon" id="inventory_item5" src="Icons/EmptyIcon_Item.png">
+                    <img class="inventoryicon" id="inventory_item0" src="Pictures/emptyitemicon.png">
+                    <img class="inventoryicon" id="inventory_item1" src="Pictures/emptyitemicon.png">
+                    <img class="inventoryicon" id="inventory_item2" src="Pictures/emptyitemicon.png">
+                    <img class="inventoryicon" id="inventory_item3" src="Pictures/emptyitemicon.png">
+                    <img class="inventoryicon" id="inventory_item4" src="Pictures/emptyitemicon.png">
+                    <img class="inventoryicon" id="inventory_item5" src="Pictures/emptyitemicon.png">
                     <h1>Item Stats</h1>
                     <p id="hoverinfo"><p>
                 </div>
@@ -157,24 +157,6 @@
                     <img class="shopicon" id="shop_icon53" src="icons/EmptyIcon_Item.png">
                     <img class="shopicon" id="shop_icon54" src="icons/EmptyIcon_Item.png">
                     <img class="shopicon" id="shop_icon55" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon56" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon57" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon58" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon59" src="icons/EmptyIcon_Item.png">	
-
-                    <img class="shopicon" id="shop_icon60" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon61" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon62" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon63" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon64" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon65" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon66" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon67" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon68" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon69" src="icons/EmptyIcon_Item.png">	
-
-                    <img class="shopicon" id="shop_icon70" src="icons/EmptyIcon_Item.png">
-                    <img class="shopicon" id="shop_icon71" src="icons/EmptyIcon_Item.png">
                 </div>
 
                 <div class="goldvalue"  id="gold2">
@@ -195,10 +177,35 @@
                         
                         <div class="numRunes" style="padding-top: 10px;">
                             <ul style="font-size: 20px;">
-                                <li class="runeselect">0</li>
-                                <li class="runeselect">1</li>
-                                <li class="runeselect">2</li>
-                                <li class="runeselect">3</li>
+                                <li class="dragonselect">0</li>
+                                <li class="dragonselect">1</li>
+                                <li class="dragonselect">2</li>
+                                <li class="dragonselect">3</li>
+                            </ul>
+                        </div>
+
+                        <li style="padding-top: 10px;"><span id="nav2">Champion Level</span></li>
+                        
+                        <div class="levels" style="padding-top: 10px;">
+                            <ul style="font-size: 20px;">
+                                <li class="levelselect">1</li>
+                                <li class="levelselect">2</li>
+                                <li class="levelselect">3</li>
+                                <li class="levelselect">4</li>
+                                <li class="levelselect">5</li>
+                                <li class="levelselect">6</li>
+                                <li class="levelselect">7</li>
+                                <li class="levelselect">8</li>
+                                <li class="levelselect">9</li>
+                                <li class="levelselect">10</li>
+                                <li class="levelselect">11</li>
+                                <li class="levelselect">12</li>
+                                <li class="levelselect">13</li>
+                                <li class="levelselect">14</li>
+                                <li class="levelselect">15</li>
+                                <li class="levelselect">16</li>
+                                <li class="levelselect">17</li>
+                                <li class="levelselect">18</li>
                             </ul>
                         </div>
                         
@@ -225,422 +232,422 @@
                         <li style="padding-top: 10px;"><span id="nav2">Elder Dragon </span><input type="checkbox" id="elder_dragon"></li>
                     </ul>
                 </div>
-                <div class="datadescription" id="datadescription">
+                <!--<div class="datadescription" id="datadescription">
                     <div id="datatitle" class="datatitle">Lots of Numbers</div>
-                    <div id="datadesc" class="datadesc">This is a bunch of words. This bunch of words is meant to inform the user of the purpose of the data they're entering
+                    <div id="datadesc" class="datadesc">To create your build, we'll need a lot of information. 
                                                         while also filling up some awkward white space. This bunch of words will change depending on which input box is
                                                         currently focused (not yet though). Maybe we could have something like this on every page?</div>
-                </div>
+                </div> -->
 
                 <div id="runes">
                     <div class="msgq" id="marks">
                         <span style="font-size: 40px;">Marks</span><br><br>
                         Armor Pen
-                        <div class="numRunes">
-                            <ul id = "fug">
-                                <li class="runeselect" id="armorPenMarks">0</li>
-                                <li class="runeselect" id="armorPenMarks">1</li>
-                                <li class="runeselect" id="armorPenMarks">2</li>
-                                <li class="runeselect" id="armorPenMarks">3</li>
-                                <li class="runeselect" id="armorPenMarks">4</li>
-                                <li class="runeselect" id="armorPenMarks">5</li>
-                                <li class="runeselect" id="armorPenMarks">6</li>
-                                <li class="runeselect" id="armorPenMarks">7</li>
-                                <li class="runeselect" id="armorPenMarks">8</li>
-                                <li class="runeselect" id="armorPenMarks">9</li>
+                        <div class="numRunes" id="armorPenMarks">
+                            <ul>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Attack Damage
-                        <div class="numRunes">
+                        <div class="numRunes" id="attackDamageMarks">
                             <ul>
-                                <li class="runeselect" id="attackDamageMarks">0</li>
-                                <li class="runeselect" id="attackDamageMarks">1</li>
-                                <li class="runeselect" id="attackDamageMarks">2</li>
-                                <li class="runeselect" id="attackDamageMarks">3</li>
-                                <li class="runeselect" id="attackDamageMarks">4</li>
-                                <li class="runeselect" id="attackDamageMarks">5</li>
-                                <li class="runeselect" id="attackDamageMarks">6</li>
-                                <li class="runeselect" id="attackDamageMarks">7</li>
-                                <li class="runeselect" id="attackDamageMarks">8</li>
-                                <li class="runeselect" id="attackDamageMarks">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Attack Speed
-                        <div class="numRunes">
+                        <div class="numRunes" id="attackSpeedMarks">
                             <ul>
-                                <li class="runeselect" id="attackSpeedMarks">0</li>
-                                <li class="runeselect" id="attackSpeedMarks">1</li>
-                                <li class="runeselect" id="attackSpeedMarks">2</li>
-                                <li class="runeselect" id="attackSpeedMarks">3</li>
-                                <li class="runeselect" id="attackSpeedMarks">4</li>
-                                <li class="runeselect" id="attackSpeedMarks">5</li>
-                                <li class="runeselect" id="attackSpeedMarks">6</li>
-                                <li class="runeselect" id="attackSpeedMarks">7</li>
-                                <li class="runeselect" id="attackSpeedMarks">8</li>
-                                <li class="runeselect" id="attackSpeedMarks">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Critical Chance
-                        <div class="numRunes">
+                        <div class="numRunes" id="critChanceMarks">
                             <ul>
-                                <li class="runeselect" id="critChanceMarks">0</li>
-                                <li class="runeselect" id="critChanceMarks">1</li>
-                                <li class="runeselect" id="critChanceMarks">2</li>
-                                <li class="runeselect" id="critChanceMarks">3</li>
-                                <li class="runeselect" id="critChanceMarks">4</li>
-                                <li class="runeselect" id="critChanceMarks">5</li>
-                                <li class="runeselect" id="critChanceMarks">6</li>
-                                <li class="runeselect" id="critChanceMarks">7</li>
-                                <li class="runeselect" id="critChanceMarks">8</li>
-                                <li class="runeselect" id="critChanceMarks">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Critical Damage
-                        <div class="numRunes">
+                        <div class="numRunes" id="critDamageMarks">
                             <ul>
-                                <li class="runeselect" id="critDamageMarks">0</li>
-                                <li class="runeselect" id="critDamageMarks">1</li>
-                                <li class="runeselect" id="critDamageMarks">2</li>
-                                <li class="runeselect" id="critDamageMarks">3</li>
-                                <li class="runeselect" id="critDamageMarks">4</li>
-                                <li class="runeselect" id="critDamageMarks">5</li>
-                                <li class="runeselect" id="critDamageMarks">6</li>
-                                <li class="runeselect" id="critDamageMarks">7</li>
-                                <li class="runeselect" id="critDamageMarks">8</li>
-                                <li class="runeselect" id="critDamageMarks">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Hybrid Pen
-                        <div class="numRunes">
+                        <div class="numRunes" id="hybridPenMarks">
                             <ul>
-                                <li class="runeselect" id="hybridPenMarks">0</li>
-                                <li class="runeselect" id="hybridPenMarks">1</li>
-                                <li class="runeselect" id="hybridPenMarks">2</li>
-                                <li class="runeselect" id="hybridPenMarks">3</li>
-                                <li class="runeselect" id="hybridPenMarks">4</li>
-                                <li class="runeselect" id="hybridPenMarks">5</li>
-                                <li class="runeselect" id="hybridPenMarks">6</li>
-                                <li class="runeselect" id="hybridPenMarks">7</li>
-                                <li class="runeselect" id="hybridPenMarks">8</li>
-                                <li class="runeselect" id="hybridPenMarks">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Magic Pen
-                        <div class="numRunes">
+                        <div class="numRunes" id="magicPenMarks">
                             <ul>
-                                <li class="runeselect" id="magicPenMarks">0</li>
-                                <li class="runeselect" id="magicPenMarks">1</li>
-                                <li class="runeselect" id="magicPenMarks">2</li>
-                                <li class="runeselect" id="magicPenMarks">3</li>
-                                <li class="runeselect" id="magicPenMarks">4</li>
-                                <li class="runeselect" id="magicPenMarks">5</li>
-                                <li class="runeselect" id="magicPenMarks">6</li>
-                                <li class="runeselect" id="magicPenMarks">7</li>
-                                <li class="runeselect" id="magicPenMarks">8</li>
-                                <li class="runeselect" id="magicPenMarks">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                     </div>
                     <div class="msgq" id="seals">
                         <span style="font-size: 40px;">Seals</span><br><br>
                         Armor
-                        <div class="numRunes">
+                        <div class="numRunes" id="armorSeals">
                             <ul>
-                                <li class="runeselect" id="armorSeals">0</li>
-                                <li class="runeselect" id="armorSeals">1</li>
-                                <li class="runeselect" id="armorSeals">2</li>
-                                <li class="runeselect" id="armorSeals">3</li>
-                                <li class="runeselect" id="armorSeals">4</li>
-                                <li class="runeselect" id="armorSeals">5</li>
-                                <li class="runeselect" id="armorSeals">6</li>
-                                <li class="runeselect" id="armorSeals">7</li>
-                                <li class="runeselect" id="armorSeals">8</li>
-                                <li class="runeselect" id="armorSeals">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Energy Regen
-                        <div class="numRunes">
+                        <div class="numRunes" id="energyRegenSeals">
                             <ul>
-                                <li class="runeselect" id="energyRegenSeals">0</li>
-                                <li class="runeselect" id="energyRegenSeals">1</li>
-                                <li class="runeselect" id="energyRegenSeals">2</li>
-                                <li class="runeselect" id="energyRegenSeals">3</li>
-                                <li class="runeselect" id="energyRegenSeals">4</li>
-                                <li class="runeselect" id="energyRegenSeals">5</li>
-                                <li class="runeselect" id="energyRegenSeals">6</li>
-                                <li class="runeselect" id="energyRegenSeals">7</li>
-                                <li class="runeselect" id="energyRegenSeals">8</li>
-                                <li class="runeselect" id="energyRegenSeals">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Health
-                        <div class="numRunes">
+                        <div class="numRunes" id="healthSeals">
                             <ul>
-                                <li class="runeselect" id="healthSeals">0</li>
-                                <li class="runeselect" id="healthSeals">1</li>
-                                <li class="runeselect" id="healthSeals">2</li>
-                                <li class="runeselect" id="healthSeals">3</li>
-                                <li class="runeselect" id="healthSeals">4</li>
-                                <li class="runeselect" id="healthSeals">5</li>
-                                <li class="runeselect" id="healthSeals">6</li>
-                                <li class="runeselect" id="healthSeals">7</li>
-                                <li class="runeselect" id="healthSeals">8</li>
-                                <li class="runeselect" id="healthSeals">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Health Regen
-                        <div class="numRunes">
+                        <div class="numRunes" id="healthRegenSeals">
                             <ul>
-                                <li class="runeselect" id="healthRegenSeals">0</li>
-                                <li class="runeselect" id="healthRegenSeals">1</li>
-                                <li class="runeselect" id="healthRegenSeals">2</li>
-                                <li class="runeselect" id="healthRegenSeals">3</li>
-                                <li class="runeselect" id="healthRegenSeals">4</li>
-                                <li class="runeselect" id="healthRegenSeals">5</li>
-                                <li class="runeselect" id="healthRegenSeals">6</li>
-                                <li class="runeselect" id="healthRegenSeals">7</li>
-                                <li class="runeselect" id="healthRegenSeals">8</li>
-                                <li class="runeselect" id="healthRegenSeals">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Mana Regen
-                        <div class="numRunes">
+                        <div class="numRunes" id="manaRegenSeals">
                             <ul>
-                                <li class="runeselect" id="manaRegenSeals">0</li>
-                                <li class="runeselect" id="manaRegenSeals">1</li>
-                                <li class="runeselect" id="manaRegenSeals">2</li>
-                                <li class="runeselect" id="manaRegenSeals">3</li>
-                                <li class="runeselect" id="manaRegenSeals">4</li>
-                                <li class="runeselect" id="manaRegenSeals">5</li>
-                                <li class="runeselect" id="manaRegenSeals">6</li>
-                                <li class="runeselect" id="manaRegenSeals">7</li>
-                                <li class="runeselect" id="manaRegenSeals">8</li>
-                                <li class="runeselect" id="manaRegenSeals">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         % Health
-                        <div class="numRunes">
+                        <div class="numRunes" id="percentHealthSeals">
                             <ul>
-                                <li class="runeselect" id="percentHealthSeals">0</li>
-                                <li class="runeselect" id="percentHealthSeals">1</li>
-                                <li class="runeselect" id="percentHealthSeals">2</li>
-                                <li class="runeselect" id="percentHealthSeals">3</li>
-                                <li class="runeselect" id="percentHealthSeals">4</li>
-                                <li class="runeselect" id="percentHealthSeals">5</li>
-                                <li class="runeselect" id="percentHealthSeals">6</li>
-                                <li class="runeselect" id="percentHealthSeals">7</li>
-                                <li class="runeselect" id="percentHealthSeals">8</li>
-                                <li class="runeselect" id="percentHealthSeals">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                     </div>
                     <div class="msgq" id="glyphs">
                         <span style="font-size: 40px;">Glyphs</span><br><br>
                         Ability Power
-                        <div class="numRunes">
+                        <div class="numRunes" id="abilityPowerGlyphs">
                             <ul>
-                                <li class="runeselect" id="abilityPowerGlyphs">0</li>
-                                <li class="runeselect" id="abilityPowerGlyphs">1</li>
-                                <li class="runeselect" id="abilityPowerGlyphs">2</li>
-                                <li class="runeselect" id="abilityPowerGlyphs">3</li>
-                                <li class="runeselect" id="abilityPowerGlyphs">4</li>
-                                <li class="runeselect" id="abilityPowerGlyphs">5</li>
-                                <li class="runeselect" id="abilityPowerGlyphs">6</li>
-                                <li class="runeselect" id="abilityPowerGlyphs">7</li>
-                                <li class="runeselect" id="abilityPowerGlyphs">8</li>
-                                <li class="runeselect" id="abilityPowerGlyphs">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Cooldown Reduction
-                        <div class="numRunes">
+                        <div class="numRunes" id="cooldownReductionGlyphs">
                             <ul>
-                                <li class="runeselect" id="cooldownReductionGlyphs">0</li>
-                                <li class="runeselect" id="cooldownReductionGlyphs">1</li>
-                                <li class="runeselect" id="cooldownReductionGlyphs">2</li>
-                                <li class="runeselect" id="cooldownReductionGlyphs">3</li>
-                                <li class="runeselect" id="cooldownReductionGlyphs">4</li>
-                                <li class="runeselect" id="cooldownReductionGlyphs">5</li>
-                                <li class="runeselect" id="cooldownReductionGlyphs">6</li>
-                                <li class="runeselect" id="cooldownReductionGlyphs">7</li>
-                                <li class="runeselect" id="cooldownReductionGlyphs">8</li>
-                                <li class="runeselect" id="cooldownReductionGlyphs">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Energy
-                        <div class="numRunes">
+                        <div class="numRunes" id="energyGlyphs">
                             <ul>
-                                <li class="runeselect" id="energyGlyphs">0</li>
-                                <li class="runeselect" id="energyGlyphs">1</li>
-                                <li class="runeselect" id="energyGlyphs">2</li>
-                                <li class="runeselect" id="energyGlyphs">3</li>
-                                <li class="runeselect" id="energyGlyphs">4</li>
-                                <li class="runeselect" id="energyGlyphs">5</li>
-                                <li class="runeselect" id="energyGlyphs">6</li>
-                                <li class="runeselect" id="energyGlyphs">7</li>
-                                <li class="runeselect" id="energyGlyphs">8</li>
-                                <li class="runeselect" id="energyGlyphs">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Mana
-                        <div class="numRunes">
+                        <div class="numRunes" id="manaGlyphs">
                             <ul>
-                                <li class="runeselect" id="manaGlyphs">0</li>
-                                <li class="runeselect" id="manaGlyphs">1</li>
-                                <li class="runeselect" id="manaGlyphs">2</li>
-                                <li class="runeselect" id="manaGlyphs">3</li>
-                                <li class="runeselect" id="manaGlyphs">4</li>
-                                <li class="runeselect" id="manaGlyphs">5</li>
-                                <li class="runeselect" id="manaGlyphs">6</li>
-                                <li class="runeselect" id="manaGlyphs">7</li>
-                                <li class="runeselect" id="manaGlyphs">8</li>
-                                <li class="runeselect" id="manaGlyphs">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                         Magic Resist
-                        <div class="numRunes">
+                        <div class="numRunes" id="magicResistGlyphs">
                             <ul>
-                                <li class="runeselect" id="magicResistGlyphs">0</li>
-                                <li class="runeselect" id="magicResistGlyphs">1</li>
-                                <li class="runeselect" id="magicResistGlyphs">2</li>
-                                <li class="runeselect" id="magicResistGlyphs">3</li>
-                                <li class="runeselect" id="magicResistGlyphs">4</li>
-                                <li class="runeselect" id="magicResistGlyphs">5</li>
-                                <li class="runeselect" id="magicResistGlyphs">6</li>
-                                <li class="runeselect" id="magicResistGlyphs">7</li>
-                                <li class="runeselect" id="magicResistGlyphs">8</li>
-                                <li class="runeselect" id="magicResistGlyphs">9</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
+                                <li class="runeselect">4</li>
+                                <li class="runeselect">5</li>
+                                <li class="runeselect">6</li>
+                                <li class="runeselect">7</li>
+                                <li class="runeselect">8</li>
+                                <li class="runeselect">9</li>
                             </ul>
                         </div>
                     </div>
                     <div class="msgq" id="quints">
                         <span style="font-size: 40px;">Quints</span><br><br>
                         Ability Power
-                        <div class="numRunes">
+                        <div class="numRunes" id="abilityPowerQuints">
                             <ul>
-                                <li class="runeselect" id="abilityPowerQuints">0</li>
-                                <li class="runeselect" id="abilityPowerQuints">1</li>
-                                <li class="runeselect" id="abilityPowerQuints">2</li>
-                                <li class="runeselect" id="abilityPowerQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         Armor
-                        <div class="numRunes">
+                        <div class="numRunes" id="armorQuints">
                             <ul>
-                                <li class="runeselect" id="armorQuints">0</li>
-                                <li class="runeselect" id="armorQuints">1</li>
-                                <li class="runeselect" id="armorQuints">2</li>
-                                <li class="runeselect" id="armorQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         Cooldown Reduction
-                        <div class="numRunes">
+                        <div class="numRunes" id="cooldownReductionQuints">
                             <ul>
-                                <li class="runeselect" id="cooldownReductionQuints">0</li>
-                                <li class="runeselect" id="cooldownReductionQuints">1</li>
-                                <li class="runeselect" id="cooldownReductionQuints">2</li>
-                                <li class="runeselect" id="cooldownReductionQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         Gold
-                        <div class="numRunes">
+                        <div class="numRunes"  id="goldQuints">
                             <ul>
-                                <li class="runeselect" id="goldQuints">0</li>
-                                <li class="runeselect" id="goldQuints">1</li>
-                                <li class="runeselect" id="goldQuints">2</li>
-                                <li class="runeselect" id="goldQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         Health
-                        <div class="numRunes">
+                        <div class="numRunes"  id="healthQuints">
                             <ul>
-                                <li class="runeselect" id="healthQuints">0</li>
-                                <li class="runeselect" id="healthQuints">1</li>
-                                <li class="runeselect" id="healthQuints">2</li>
-                                <li class="runeselect" id="healthQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         Health Regen
-                        <div class="numRunes">
+                        <div class="numRunes" id="healthRegenQuints">
                             <ul>
-                                <li class="runeselect" id="healthRegenQuints">0</li>
-                                <li class="runeselect" id="healthRegenQuints">1</li>
-                                <li class="runeselect" id="healthRegenQuints">2</li>
-                                <li class="runeselect" id="healthRegenQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         Mana
-                        <div class="numRunes">
+                        <div class="numRunes" id="manaQuints">
                             <ul>
-                                <li class="runeselect" id="manaQuints">0</li>
-                                <li class="runeselect" id="manaQuints">1</li>
-                                <li class="runeselect" id="manaQuints">2</li>
-                                <li class="runeselect" id="manaQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                     </div>
                     <div class="msgq" id="quints2">
                         <span style="font-size: 40px; color: black;">Quints</span><br><br>
                         Mana Regen
-                        <div class="numRunes">
+                        <div class="numRunes"  id="manaRegenQuints">
                             <ul>
-                                <li class="runeselect" id="manaRegenQuints">0</li>
-                                <li class="runeselect" id="manaRegenQuints">1</li>
-                                <li class="runeselect" id="manaRegenQuints">2</li>
-                                <li class="runeselect" id="manaRegenQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         % Health
-                        <div class="numRunes">
+                        <div class="numRunes" id="percentHealthQuints">
                             <ul>
-                                <li class="runeselect" id="percentHealthQuints">0</li>
-                                <li class="runeselect" id="percentHealthQuints">1</li>
-                                <li class="runeselect" id="percentHealthQuints">2</li>
-                                <li class="runeselect" id="percentHealthQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         Experience
-                        <div class="numRunes">
+                        <div class="numRunes" id="experienceQuints">
                             <ul>
-                                <li class="runeselect" id="experienceQuints">0</li>
-                                <li class="runeselect" id="experienceQuints">1</li>
-                                <li class="runeselect" id="experienceQuints">2</li>
-                                <li class="runeselect" id="experienceQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         Life Steal
-                        <div class="numRunes">
+                        <div class="numRunes" id="lifestealQuints">
                             <ul>
-                                <li class="runeselect" id="lifestealQuints">0</li>
-                                <li class="runeselect" id="lifestealQuints">1</li>
-                                <li class="runeselect" id="lifestealQuints">2</li>
-                                <li class="runeselect" id="lifestealQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         Movespeed
-                        <div class="numRunes">
+                        <div class="numRunes" id="movespeedQuints">
                             <ul>
-                                <li class="runeselect" id="movespeedQuints">0</li>
-                                <li class="runeselect" id="movespeedQuints">1</li>
-                                <li class="runeselect" id="movespeedQuints">2</li>
-                                <li class="runeselect" id="movespeedQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         Revival
-                        <div class="numRunes">
+                        <div class="numRunes" id="revivalQuints">
                             <ul>
-                                <li class="runeselect" id="revivalQuints">0</li>
-                                <li class="runeselect" id="revivalQuints">1</li>
-                                <li class="runeselect" id="revivalQuints">2</li>
-                                <li class="runeselect" id="revivalQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                         Spell Vamp
-                        <div class="numRunes">
+                        <div class="numRunes" id="spellvampQuints">
                             <ul>
-                                <li class="runeselect" id="spellvampQuints">0</li>
-                                <li class="runeselect" id="spellvampQuints">1</li>
-                                <li class="runeselect" id="spellvampQuints">2</li>
-                                <li class="runeselect" id="spellvampQuints">3</li>
+                                <li class="runeselect">0</li>
+                                <li class="runeselect">1</li>
+                                <li class="runeselect">2</li>
+                                <li class="runeselect">3</li>
                             </ul>
                         </div>
                     </div>
@@ -649,11 +656,9 @@
 		</div>
 		
 		<div class="col-3 navbar">
-			<ul>
-			  <h1><li style="padding-bottom: 10px; padding-top: 10px;"><span id="nav3">Runes</span></li></h1>
-			  <h1><li style="padding-bottom: 10px; padding-top: 10px;"><span id="nav4">Game Data</span></li></h1>
-			  <h1><li style="padding-bottom: 10px; padding-top: 10px;"><span id="nav5">Shop</span></li></h1>
-			</ul>
+			  <div><h1><span id="nav3">Runes</span></h1></div>
+			  <div><h1><span id="nav4">Game Data</span></h1></div>
+			  <div><h1><span id="nav5">Shop</span></h1></div>
 		</div>
 	</div>
 </div>

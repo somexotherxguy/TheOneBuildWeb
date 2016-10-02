@@ -54,8 +54,18 @@
     for(var i = 0; i < rune_handlers.length; i++){
         rune_handlers[i].id = 'runeselect' + i;
         rune_handlers[i].addEventListener('click', highlight_rune);
+        if(rune_handlers[i].innerHTML === '0'){
+            rune_handlers[i].style.border = '1px solid #f2f2f2';
+        }
     }
-    
+    var level_handlers = document.getElementsByClassName('levelselect');
+    for(var i = 0; i < level_handlers.length; i++){
+        level_handlers[i].id = 'levelselect' + i;
+        level_handlers[i].addEventListener('click', highlight_level);
+        if(level_handlers[i].innerHTML === '0'){
+            level_handlers[i].style.border = '1px solid #f2f2f2';
+        }
+    }
     
     //get the full item json from ddragon
     var item_json;
@@ -130,6 +140,81 @@
     document.getElementById('jungleclears').addEventListener('keyup', sum_gold);
     console.log(document.getElementById('kills').value);
     
+    //Variables for tracking the stats
+    var rune_health = 0;
+    var rune_healthreg = 0;
+    var rune_healthpercent = 0;
+    var rune_mana = 0;
+    var rune_manareg = 0;
+    var rune_ad = 0;
+    var rune_as = 0;
+    var rune_crit = 0;
+    var rune_ap = 0;
+    var rune_magpen = 0;
+    var rune_percentmagpen = 0;
+    var rune_armorpen = 0;
+    var rune_percentarmorpen = 0;
+    var rune_cdr = 0;
+    var rune_percentms = 0;
+    var rune_mr = 0;
+    var rune_armor = 0;
+    var rune_quint_ap = 0;
+    var rune_quint_armor = 0;
+    var rune_quint_cdr = 0;
+    var rune_quint_gold = 0;
+    var rune_quint_health = 0;
+    var rune_quint_healthreg = 0;
+    var rune_quint_mana = 0;
+    var rune_quint_manareg = 0;
+    var rune_quint_percenthealth = 0;
+    var rune_quint_exp = 0;
+    var rune_quint_lifesteal = 0;
+    var rune_quint_ms = 0;
+    var rune_quint_revival = 0;
+    var rune_quint_spellvamp = 0;
+
+    var item_health = 0;
+    var item_healthreg = 0;
+    var item_mana = 0;
+    var item_manareg = 0;
+    var item_ad = 0;
+    var item_as = 0;
+    var item_crit = 0;
+    var item_ap = 0;
+    var item_magpen = 0;
+    var item_percentmagpen = 0;
+    var item_armorpen = 0;
+    var item_percentarmorpen = 0;
+    var item_cdr = 0;
+    var item_ms = 0;
+    var item_percentms = 0;
+    var item_mr = 0;
+    var item_armor = 0;
+
+    var base_health = 0;
+    var base_healthreg = 0;
+    var base_mana = 0;
+    var base_manareg = 0;
+    var base_ad = 0;
+    var base_crit = 0;
+    var base_ms = 0;
+    var base_mr = 0;
+    var base_armor = 0;
+
+    var health_per_level = 0;
+    var mana_per_level = 0;
+    var ad_per_level = 0;
+    var manareg_per_level = 0;
+    var mr_per_level = 0;
+    var as_per_level = 0;
+    var healthreg_per_level = 0;
+    var armor_per_level = 0;
+    var attack_speed_offset = 0;
+
+    var attack_speed_offset_val = 0.625;
+
+    var level = 1;
+
     //get all the information from the api and display it
     get_base_stats();
     initializeShop();
@@ -244,7 +329,7 @@
                     }
                 }
                 j=0;
-                for(i=0; i<72; i++){
+                for(i=0; i<56; i++){
                     var num = i.toString();
                     var shop_icon_string = "shop_icon"
                     var shop_id = shop_icon_string.concat(num);
@@ -307,7 +392,28 @@
         window.localStorage.setItem('champname', document.getElementById('champsearch2').value);
     }
 
-        
+    
+    function update_stats(){
+        console.log(as_per_level);
+        document.getElementById("health").innerHTML = (rune_health + rune_quint_health + item_health + base_health + ((level-1) * health_per_level)).toFixed(2);
+        document.getElementById("healthregen").innerHTML = (rune_healthreg + rune_quint_healthreg + item_healthreg + base_healthreg + ((level-1) * healthreg_per_level)).toFixed(2);
+        document.getElementById("mana").innerHTML = (rune_mana + rune_quint_mana + item_mana + base_mana + ((level-1) * mana_per_level)).toFixed(2);
+        document.getElementById("manaregen").innerHTML = (rune_manareg + rune_quint_manareg + item_manareg + base_manareg + ((level-1) * manareg_per_level)).toFixed(2);
+        document.getElementById("attackdamage").innerHTML = (rune_ad + item_ad + base_ad + ((level-1) * ad_per_level)).toFixed(2);
+        document.getElementById("attackspeed").innerHTML = (rune_as + item_as + ((level-1) * as_per_level) + attack_speed_offset_val/(1 + attack_speed_offset)).toFixed(2);
+        document.getElementById("criticalchance").innerHTML = (rune_crit + item_crit + base_crit).toFixed(2);
+        document.getElementById("abilitypower").innerHTML = (rune_ap + rune_quint_ap + item_ap).toFixed(2);
+        document.getElementById("magicpen").innerHTML = (rune_magpen + item_magpen).toFixed(2);
+        document.getElementById("percentmagicpen").innerHTML = (rune_percentmagpen + item_percentmagpen).toFixed(2);
+        document.getElementById("armorpen").innerHTML = (rune_armorpen + item_armorpen).toFixed(2);
+        document.getElementById("percentarmorpen").innerHTML = (rune_percentarmorpen + item_percentarmorpen).toFixed(2);
+        document.getElementById("cooldownreduction").innerHTML = (rune_cdr + rune_quint_cdr + item_cdr).toFixed(2);
+        document.getElementById("movespeed").innerHTML = (base_ms).toFixed(2);
+        document.getElementById("magicresist").innerHTML = (rune_mr + item_mr + base_mr + ((level-1) * mr_per_level)).toFixed(2);
+        document.getElementById("armor").innerHTML = (rune_armor + rune_quint_armor + item_armor + base_armor + ((level-1) * armor_per_level)).toFixed(2);
+    }
+
+    
     function get_base_stats(){
         var champ_name = "";
         champ_name = $("#champsearch2").val();
@@ -343,25 +449,26 @@
                     }
                 }
                 
-                //document.getElementById("mpperlevel").value=stats.mpperlevel;
-                document.getElementById("mana").innerHTML = Math.round(stats.mp);
-                document.getElementById("attackdamage").innerHTML = Math.round(stats.attackdamage);
-                document.getElementById("health").innerHTML = Math.round(stats.hp);
-                //document.getElementById("hpperlevel").value=stats.hpperlevel;
-                //document.getElementById("attackdamageperlevel").value=stats.attackdamageperlevel;
-                document.getElementById("armor").innerHTML = Math.round(stats.armor);
-                //document.getElementById("mpregenperlevel").value=stats.mpregenperlevel;
-                document.getElementById("healthregen").innerHTML = Math.round(stats.hpregen);
-                //document.getElementById("critperlevel").value=stats.critperlevel;
-                //document.getElementById("mrperlevel").value=stats.spellblockperlevel;
-                document.getElementById("manaregen").innerHTML = Math.round(stats.mpregen);
-                //document.getElementById("attackspeedperlevel").value=stats.attackspeedperlevel;
-                document.getElementById("magicresist").innerHTML = Math.round(stats.spellblock);
-                document.getElementById("movespeed").innerHTML = Math.round(stats.movespeed);
-                document.getElementById("criticalchance").innerHTML = Math.round(stats.crit);
-                //document.getElementById("hpregenperlevel").value=stats.hpregenperlevel;
-                //document.getElementById("armorperlevel").value=stats.armorperlevel;
-                //document.getElementById("attackspeedoffset").value=stats.attackspeedoffset;
+                mana_per_level = Math.round(stats.mpperlevel);
+                base_mana = Math.round(stats.mp);
+                base_ad = Math.round(stats.attackdamage);
+                base_health = Math.round(stats.hp);
+                health_per_level = Math.round(stats.hpperlevel);
+                ad_per_level = Math.round(stats.attackdamageperlevel);
+                base_armor = Math.round(stats.armor);
+                manareg_per_level = Math.round(stats.mpregenperlevel);
+                base_healthreg = Math.round(stats.hpregen);
+                mr_per_level = Math.round(stats.spellblockperlevel);
+                base_manareg = Math.round(stats.mpregen);
+                as_per_level = Math.round(stats.attackspeedperlevel);
+                as_per_level = as_per_level/100;
+                base_mr = Math.round(stats.spellblock);
+                base_ms = Math.round(stats.movespeed);
+                base_critchance = Math.round(stats.crit);
+                healthreg_per_level = Math.round(stats.hpregenperlevel);
+                armor_per_level = Math.round(stats.armorperlevel);
+                attack_speed_offset = Math.round(stats.attackspeedoffset);
+                update_stats();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 
@@ -870,7 +977,8 @@
         var shop_array = [];
         var item_info = [];
         var tag_info = [];
-        var shop_array_modified = [];
+        var shop_array_filtered = [];
+        var checked_boxes = [];
         
         for(var key in item_json.data){
             if(item_json.data.hasOwnProperty(key)){	
@@ -935,175 +1043,72 @@
         var check_mana_regen = document.getElementById('mana_regen_filter').checked;
         var check_MS = document.getElementById('MS_filter').checked;
         
-        
-        for(k=0; k < shop_array.length; k++){
-            if(check_health == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'Health'){
-                        shop_array_modified.push(shop_array[k]);
-                    }
-                    
-                }
-            }
+        if(check_health == true){
+            checked_boxes.push('Health');
         }
-        
-        for(k=0; k < shop_array.length; k++){
-            if(check_MR == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'SpellBlock'){
-                        shop_array_modified.push(shop_array[k]);
-                    }
-                    
-                }
-            }
+        if(check_MR == true){
+            checked_boxes.push('SpellBlock');
         }
-        
-        for(k=0; k < shop_array.length; k++){
-            if(check_armor == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'Armor'){
-                        shop_array_modified.push(shop_array[k]);
-                    }
-                    
-                }
-            }
+        if(check_armor == true){
+            checked_boxes.push('Armor');
         }
-        
-        for(k=0; k < shop_array.length; k++){
-            if(check_AD == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'Damage'){
-                        shop_array_modified.push(shop_array[k]);
-                    }
-                    
-                }
-            }
+        if(check_AD == true){
+            checked_boxes.push('Damage');
+        }
+        if(check_AS == true){
+            checked_boxes.push('AttackSpeed');
+        }
+        if(check_crit == true){
+            checked_boxes.push('CriticalStrike');
+        }
+        if(check_lifesteal == true){
+            checked_boxes.push('LifeSteal');
+        }
+        if(check_AP == true){
+            checked_boxes.push('SpellDamage');
+        }
+        if(check_CDR == true){
+            checked_boxes.push('CooldownReduction');
+        }
+        if(check_mana == true){
+            checked_boxes.push('Mana');
+        }
+        if(check_mana_regen == true){
+            checked_boxes.push('ManaRegen');
+        }
+        if(check_MS == true){
+            checked_boxes.push('MoveSpeed')
         }
 
         for(k=0; k < shop_array.length; k++){
-            if(check_AS == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'AttackSpeed'){
-                        shop_array_modified.push(shop_array[k]);
+            var track = 0;
+            for(j=0; j < checked_boxes.length; j++){
+                for(var prop in tag_info[k]){
+                    if(checked_boxes[j] !== 'MoveSpeed'){
+                        if(checked_boxes[j] === tag_info[k][prop]){
+                            track = track + 1;
+                        }
+                    } else {
+                        if(tag_info[k][prop] === 'NonbootsMovement' || tag_info[k][prop] == 'Boots'){
+                            track = track + 1;  
+                        }
                     }
-                    
                 }
             }
-        }
-        
-        for(k=0; k < shop_array.length; k++){
-            if(check_crit == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'CriticalStrike'){
-                        shop_array_modified.push(shop_array[k]);
-                    }
-                    
-                }
+            if(track === checked_boxes.length){
+                shop_array_filtered.push(shop_array[k]);
             }
         }
 
-        for(k=0; k < shop_array.length; k++){
-            if(check_lifesteal == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'LifeSteal'){
-                        shop_array_modified.push(shop_array[k]);
-                    }
-                    
-                }
-            }
-        }
-
-        for(k=0; k < shop_array.length; k++){
-            if(check_AP == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'SpellDamage'){
-                        shop_array_modified.push(shop_array[k]);
-                    }
-                    
-                }
-            }
-        }
-        
-        for(k=0; k < shop_array.length; k++){
-            if(check_CDR == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'CooldownReduction'){
-                        shop_array_modified.push(shop_array[k]);
-                    }
-                    
-                }
-            }
-        }
-
-        for(k=0; k < shop_array.length; k++){
-            if(check_mana == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'Mana'){
-                        shop_array_modified.push(shop_array[k]);
-                    }
-                    
-                }
-            }
-        }
-        
-        for(k=0; k < shop_array.length; k++){
-            if(check_mana_regen == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'ManaRegen'){
-                        shop_array_modified.push(shop_array[k]);
-                    }
-                    
-                }
-            }
-        }
-        
-        for(k=0; k < shop_array.length; k++){
-            if(check_MS == true){
-                
-                for(var tem in tag_info[k]){
-                    
-                    if(tag_info[k][tem] == 'NonbootsMovement' || tag_info[k][tem] == 'Boots'){
-                        shop_array_modified.push(shop_array[k]);
-                    }
-                    
-                }
-            }
-        }
-
-
-
-            
-        
         j=0;
-        for(i=0; i<72; i++){
-            if(shop_array_modified[j] != undefined){
+        for(i=0; i<56; i++){
+            if(shop_array_filtered[j] != undefined){
+                console.log(shop_array_filtered[j])
                 var num = i.toString();
                 var shop_icon_string = "shop_icon"
                 var shop_id = shop_icon_string.concat(num);
                 var item_url = "https://ddragon.leagueoflegends.com/cdn/6.10.1/img/item/";
-                var temp = shop_array_modified[j];
+                var temp = shop_array_filtered[j];
                 var mid_shop_array = temp.concat(".png");
                 
                 var shop_source = document.getElementById(shop_id);
@@ -1204,6 +1209,60 @@
             for(var i = 0; i < gold_totals.length; i++){
                 gold_totals[i].innerHTML = gold_temp[i] - item_cost;
             }
+
+            if(item_json.data[item_id].stats.hasOwnProperty('FlatArmorMod')){
+                console.log(item_json.data[item_id].stats.FlatArmorMod);
+                document.getElementById('armor').innerHTML = Number(document.getElementById('armor').innerHTML) + item_json.data[item_id].stats.FlatArmorMod;
+            }
+            if(item_json.data[item_id].stats.hasOwnProperty('FlatHPPoolMod')){
+                document.getElementById('health').innerHTML = Number(document.getElementById('health').innerHTML) + item_json.data[item_id].stats.FlatHPPoolMod;
+            }
+            if(item_json.data[item_id].stats.hasOwnProperty('FlatMPPoolMod')){
+                document.getElementById('mana').innerHTML = Number(document.getElementById('mana').innerHTML) + item_json.data[item_id].stats.FlatMPPoolMod;
+            }
+
+            //base percent modifications
+            /*if(item_json.data[item_id].stats.hasOwnProperty('FlatHPRegenMod')){
+                document.getElementById('healthregen').innerHTML = Number(document.getElementById('healthregen').innerHTML) + item_json.data[item_id].stats.FlatHPRegenMod;
+            }
+            if(item_json.data[item_id].stats.hasOwnProperty('FlatMPRegenMod')){
+                document.getElementById('manaregen').innerHTML = Number(document.getElementById('manaregen').innerHTML) + item_json.data[item_id].stats.FlatMPRegenMod;
+            }*/
+
+            if(item_json.data[item_id].stats.hasOwnProperty('FlatPhysicalDamageMod')){
+                document.getElementById('attackdamage').innerHTML = Number(document.getElementById('attackdamage').innerHTML) + item_json.data[item_id].stats.FlatPhysicalDamageMod;
+            }
+
+            //attack speed
+            /*if(item_json.data[item_id].stats.hasOwnProperty('FlatMPPoolMod')){
+                document.getElementById('mana').innerHTML = Number(document.getElementById('mana').innerHTML) + item_json.data[item_id].stats.FlatMPPoolMod;
+            }*/
+
+            if(item_json.data[item_id].stats.hasOwnProperty('FlatCritChanceMod')){
+                document.getElementById('criticalchance').innerHTML = Number(document.getElementById('criticalchance').innerHTML) + item_json.data[item_id].stats.FlatCritChanceMod;
+            }
+            if(item_json.data[item_id].stats.hasOwnProperty('FlatMagicDamageMod')){
+                document.getElementById('abilitypower').innerHTML = Number(document.getElementById('abilitypower').innerHTML) + item_json.data[item_id].stats.FlatMagicDamageMod;
+            }
+
+            //penetration and cooldown reduction values are not given in the stats table, even those that aren't unique passives
+            //could just grab the stats from the sanitized description
+            /*if(item_json.data[item_id].stats.hasOwnProperty('FlatMagicDamageMod')){
+                document.getElementById('abilitypower').innerHTML = Number(document.getElementById('abilitypower').innerHTML) + item_json.data[item_id].stats.FlatMagicDamageMod;
+            }*/
+
+            if(item_json.data[item_id].stats.hasOwnProperty('FlatMovementSpeedMod')){
+                document.getElementById('movespeed').innerHTML = Number(document.getElementById('movespeed').innerHTML) + item_json.data[item_id].stats.FlatMovementSpeedMod;
+            }
+
+            //percent movespeed
+            /*if(item_json.data[item_id].stats.hasOwnProperty('FlatMagicDamageMod')){
+                document.getElementById('abilitypower').innerHTML = Number(document.getElementById('abilitypower').innerHTML) + item_json.data[item_id].stats.FlatMagicDamageMod;
+            }*/
+
+            if(item_json.data[item_id].stats.hasOwnProperty('FlatSpellBlockMod')){
+                document.getElementById('magicresist').innerHTML = Number(document.getElementById('magicresist').innerHTML) + item_json.data[item_id].stats.FlatSpellBlockMod;
+            }
         }
         
         
@@ -1283,6 +1342,59 @@
             for(var i = 0; i < gold_totals.length; i++){
                 gold_totals[i].innerHTML = gold_temp[i] + item_cost;
             }
+
+            if(item_json.data[remove_id].stats.hasOwnProperty('FlatArmorMod')){
+                document.getElementById('armor').innerHTML = Number(document.getElementById('armor').innerHTML) - item_json.data[remove_id].stats.FlatArmorMod;
+            }
+            if(item_json.data[remove_id].stats.hasOwnProperty('FlatHPPoolMod')){
+                document.getElementById('health').innerHTML = Number(document.getElementById('health').innerHTML) - item_json.data[remove_id].stats.FlatHPPoolMod;
+            }
+            if(item_json.data[remove_id].stats.hasOwnProperty('FlatMPPoolMod')){
+                document.getElementById('mana').innerHTML = Number(document.getElementById('mana').innerHTML) - item_json.data[remove_id].stats.FlatMPPoolMod;
+            }
+
+            //base percent modifications
+            /*if(item_json.data[item_id].stats.hasOwnProperty('FlatHPRegenMod')){
+                document.getElementById('healthregen').innerHTML = Number(document.getElementById('healthregen').innerHTML) + item_json.data[item_id].stats.FlatHPRegenMod;
+            }
+            if(item_json.data[item_id].stats.hasOwnProperty('FlatMPRegenMod')){
+                document.getElementById('manaregen').innerHTML = Number(document.getElementById('manaregen').innerHTML) + item_json.data[item_id].stats.FlatMPRegenMod;
+            }*/
+
+            if(item_json.data[remove_id].stats.hasOwnProperty('FlatPhysicalDamageMod')){
+                document.getElementById('attackdamage').innerHTML = Number(document.getElementById('attackdamage').innerHTML) - item_json.data[remove_id].stats.FlatPhysicalDamageMod;
+            }
+
+            //attack speed
+            /*if(item_json.data[item_id].stats.hasOwnProperty('FlatMPPoolMod')){
+                document.getElementById('mana').innerHTML = Number(document.getElementById('mana').innerHTML) + item_json.data[item_id].stats.FlatMPPoolMod;
+            }*/
+
+            if(item_json.data[remove_id].stats.hasOwnProperty('FlatCritChanceMod')){
+                document.getElementById('criticalchance').innerHTML = Number(document.getElementById('criticalchance').innerHTML) - item_json.data[remove_id].stats.FlatCritChanceMod;
+            }
+            if(item_json.data[remove_id].stats.hasOwnProperty('FlatMagicDamageMod')){
+                document.getElementById('abilitypower').innerHTML = Number(document.getElementById('abilitypower').innerHTML) - item_json.data[remove_id].stats.FlatMagicDamageMod;
+            }
+
+            //penetration and cooldown reduction values are not given in the stats table, even those that aren't unique passives
+            //could just grab the stats from the sanitized description
+            /*if(item_json.data[item_id].stats.hasOwnProperty('FlatMagicDamageMod')){
+                document.getElementById('abilitypower').innerHTML = Number(document.getElementById('abilitypower').innerHTML) + item_json.data[item_id].stats.FlatMagicDamageMod;
+            }*/
+
+            if(item_json.data[remove_id].stats.hasOwnProperty('FlatMovementSpeedMod')){
+                document.getElementById('movespeed').innerHTML = Number(document.getElementById('movespeed').innerHTML) - item_json.data[remove_id].stats.FlatMovementSpeedMod;
+            }
+
+            //percent movespeed
+            /*if(item_json.data[item_id].stats.hasOwnProperty('FlatMagicDamageMod')){
+                document.getElementById('abilitypower').innerHTML = Number(document.getElementById('abilitypower').innerHTML) + item_json.data[item_id].stats.FlatMagicDamageMod;
+            }*/
+
+            if(item_json.data[remove_id].stats.hasOwnProperty('FlatSpellBlockMod')){
+                document.getElementById('magicresist').innerHTML = Number(document.getElementById('magicresist').innerHTML) - item_json.data[remove_id].stats.FlatSpellBlockMod;
+            }
         }
     }
 
@@ -1305,12 +1417,36 @@
             stats.innerHTML = "Empty Item Slot"
         }
     }
+
+    function highlight_level(){
+        var selected_level = document.getElementById(this.id);
+
+        if(selected_level.style.border !== '1px solid rgb(242, 242, 242)'){
+            selected_level.style.border = '1px solid #f2f2f2';
+            parent_ele = selected_level.parentElement
+            children_ele = parent_ele.childNodes
+            for(var index in children_ele){
+                if(children_ele[index] !== this && children_ele[index].nodeName !== '#text' && 
+                children_ele[index].nodeName !== undefined){
+                    children_ele[index].style.border = '1px solid #666699';
+                }
+            }     
+        }
+
+        var all_levels = document.getElementsByClassName('levelselect');
+            for(var i=0; i < all_levels.length; i++){
+                if(all_levels[i].style.border === '1px solid rgb(242, 242, 242)'){
+                level = Number(all_levels[i].innerHTML);
+            }
+        }
+
+        update_stats();
+    }
     
     function highlight_rune(){
         var selected_rune = document.getElementById(this.id);
         var rune_number = Number(selected_rune.id.replace('runeselect',''));
         var rune_id;
-        var rune_amount = Number(selected_rune.innerHTML);
         var remove_rune;
 
         var health = Number(document.getElementById('health').innerHTML);
@@ -1330,16 +1466,53 @@
         var magicresist = Number(document.getElementById('magicresist').innerHTML);
         var armor = Number(document.getElementById('armor').innerHTML);
 
-        console.log(selected_rune.style.border);
-        console.log(rune_amount);
+        var parent_ele;
+        var children_ele;
 
         if(selected_rune.style.border !== '1px solid rgb(242, 242, 242)'){
             selected_rune.style.border = '1px solid #f2f2f2';
-            remove_rune = false;
-        } else {
-            selected_rune.style.border = '1px solid #666699';
-            remove_rune = true;
+            parent_ele = selected_rune.parentElement
+            children_ele = parent_ele.childNodes
+            for(var index in children_ele){
+                if(children_ele[index] !== this && children_ele[index].nodeName !== '#text' && 
+                children_ele[index].nodeName !== undefined){
+                    children_ele[index].style.border = '1px solid #666699';
+                }
+            }     
         }
+        
+        var mark_armorpen = '5253';
+        var mark_ad = '5245';
+        var mark_as = '5247';
+        var mark_critchance = '5251';
+        var mark_critdam = '5249';
+        var mark_hypen = '5402';
+        var mark_magpen = '5273';
+        var seal_armor = '5317';
+        var seal_energyregen = '5235';
+        var seal_health = '5315';
+        var seal_healthregen = '5321';
+        var seal_manaregen = '5331';
+        var seal_percenthealth = '5415';
+        var glyph_ap = '5297';
+        var glyph_cdr = '5295';
+        var glyph_energy = '5371';
+        var glyph_mana = '5299';
+        var glyph_mr = '5289';
+        var quint_ap = '5357';
+        var quint_armor = '5347';
+        var quint_cdr = '5355';
+        var quint_gold = '5367';
+        var quint_health = '5345';
+        var quint_healthregen = '5351';
+        var quint_mana = '5359';
+        var quint_manaregen = '5361';
+        var quint_percenthealth = '5406';
+        var quint_exp = '5368';
+        var quint_lifesteal = '5412';
+        var quint_ms = '5365';
+        var quint_revival = '5366';
+        var quint_spellvamp = '5409';
 
         $.ajax({
             url:  'https://global.api.pvp.net/api/lol/static-data/na/v1.2/rune?runeListData=all&api_key=59080bd8-1d31-44be-8a1e-3ecd9a372501',
@@ -1348,194 +1521,79 @@
             data: {
             },
             success: function (json) {
-                console.log(rune_number);
-                rune_number = Number(rune_number);
-                if(rune_number>=4&&rune_number<=13){
-                    rune_id = 5253;
-                } else if(rune_number>=14&&rune_number<=23){
-                    rune_id = 5245;
-                } else if(rune_number>=24&&rune_number<=33){
-                    rune_id = 5247;
-                } else if(rune_number>=34&&rune_number<=43){
-                    rune_id = 5251;
-                } else if(rune_number>=44&&rune_number<=53){
-                    rune_id = 5249;
-                } else if(rune_number>=54&&rune_number<=63){
-                    rune_id = 5402;
-                } else if(rune_number>=64&&rune_number<=73){
-                    rune_id = 5273;
-                } else if(rune_number>=74&&rune_number<=83){
-                    rune_id = 5317;
-                } else if(rune_number>=84&&rune_number<=93){
-                    rune_id = 5369;
-                } else if(rune_number>=94&&rune_number<=103){
-                    rune_id = 5315;
-                } else if(rune_number>=104&&rune_number<=113){
-                    rune_id = 5321;
-                } else if(rune_number>=114&&rune_number<=123){
-                    rune_id = 5331;
-                } else if(rune_number>=124&&rune_number<=133){
-                    rune_id = 5415;
-                } else if(rune_number>=134&&rune_number<=143){
-                    rune_id = 5297;
-                } else if(rune_number>=144&&rune_number<=153){
-                    rune_id = 5295;
-                } else if(rune_number>=154&&rune_number<=163){
-                    rune_id = 5371;
-                } else if(rune_number>=164&&rune_number<=173){
-                    rune_id = 5299;
-                } else if(rune_number>=174&&rune_number<=183){
-                    rune_id = 5289;
-                } else if(rune_number>=184&&rune_number<=187){
-                    rune_id = 5357;
-                } else if(rune_number>=188&&rune_number<=191){
-                    rune_id = 5347;
-                } else if(rune_number>=192&&rune_number<=195){
-                    rune_id = 5355;
-                } else if(rune_number>=196&&rune_number<=199){
-                    rune_id = 5367;
-                } else if(rune_number>=200&&rune_number<=203){
-                    rune_id = 5345;
-                } else if(rune_number>=204&&rune_number<=207){
-                    rune_id = 5351;
-                } else if(rune_number>=208&&rune_number<=211){
-                    rune_id = 5359;
-                } else if(rune_number>=212&&rune_number<=215){
-                    rune_id = 5361;
-                } else if(rune_number>=216&&rune_number<=219){
-                    rune_id = 5406;
-                } else if(rune_number>=220&&rune_number<=223){
-                    rune_id = 5368;
-                } else if(rune_number>=224&&rune_number<=227){
-                    rune_id = 5412;
-                } else if(rune_number>=228&&rune_number<=231){
-                    rune_id = 5365;
-                } else if(rune_number>=232&&rune_number<=235){
-                    rune_id = 5366;
-                } else if(rune_number>=236&&rune_number<=239){
-                    rune_id = 5409;
-                }
+                var all_runes = document.getElementsByClassName('runeselect')
+                for(var i=0; i < all_runes.length; i++){
+                    if(all_runes[i].style.border === '1px solid rgb(242, 242, 242)'){
+                        var rune_amount = Number(all_runes[i].innerHTML);
+                        if(all_runes[i].parentElement.parentElement.id === 'armorPenMarks'){
+                            rune_armorpen = rune_amount * json.data[mark_armorpen].stats.rFlatArmorPenetrationMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'attackDamageMarks'){
+                            rune_ad = rune_amount * json.data[mark_ad].stats.FlatPhysicalDamageMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'attackSpeedMarks'){
+                            rune_as = rune_amount * json.data[mark_as].stats.PercentAttackSpeedMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'critChanceMarks'){
+                            rune_crit = rune_amount * json.data[mark_critchance].stats.FlatCritChanceMod * 100;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'hybridPenMarks'){
+                            rune_magpen = rune_amount * json.data[mark_hypen].stats.rFlatMagicPenetrationMod;
+                            rune_armorgpen = rune_amount * json.data[mark_hypen].stats.FlatArmorPenetrationMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'magicPenMarks'){
+                            rune_magpen = rune_amount * json.data[mark_magpen].stats.rFlatMagicPenetrationMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'armorSeals'){
+                            rune_armor = rune_amount * json.data[seal_armor].stats.FlatArmorMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'energyRegenSeals'){
+                            
+                        } else if(all_runes[i].parentElement.parentElement.id === 'healthSeals'){
+                            rune_health = rune_amount * json.data[seal_health].stats.FlatHPPoolMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'healthRegenSeals'){
+                            rune_healthreg = rune_amount * json.data[seal_healthregen].stats.FlatHPRegenMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'manaRegenSeals'){
+                            rune_manareg = rune_amount * json.data[seal_manaregen].stats.FlatMPRegenMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'percentHealthSeals'){
+                            rune_healthpercent = rune_amount * json.data[seal_percenthealth].stats.PercentHPPoolMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'abilityPowerGlyphs'){
+                            rune_ap = rune_amount * json.data[glyph_ap].stats.FlatMagicDamageMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'cooldownReductionGlyphs'){
+                            rune_cdr = rune_amount * json.data[glyph_cdr].stats.rPercentCooldownMod * 100;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'energyGlyphs'){
+                            
+                        } else if(all_runes[i].parentElement.parentElement.id === 'manaGlyphs'){
+                            rune_mana = rune_amount * json.data[glyph_mana].stats.FlatMPPoolMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'magicResistGlyphs'){
+                            rune_mr = rune_amount * json.data[glyph_mr].stats.FlatSpellBlockMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'abilityPowerQuints'){
+                            rune_quint_ap = rune_amount * json.data[quint_ap].stats.FlatMagicDamageMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'armorQuints'){
+                            rune_quint_armor = rune_amount * json.data[quint_armor].stats.FlatArmorMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'cooldownReductionQuints'){
+                            rune_quint_cdr = rune_amount * json.data[quint_cdr].stats.rPercentCooldownMod * 100;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'goldQuints'){
+                            rune_quint_gold = rune_amount * json.data[quint_gold].stats.rFlatGoldPer10Mod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'healthQuints'){
+                            rune_quint_health = rune_amount * json.data[quint_health].stats.FlatHPPoolMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'healthRegenQuints'){
+                            rune_quint_healthreg = rune_amount * json.data[quint_healthregen].stats.FlatHPRegenMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'manaQuints'){
+                            rune_quint_mana = rune_amount * json.data[quint_mana].stats.FlatMPPoolMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'manaRegenQuints'){
+                            rune_quint_manareg = rune_amount * json.data[quint_manaregen].stats.FlatMPRegenMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'percentHealthQuints'){
+                            rune_quint_percenthealth = rune_amount * json.data[quint_percenthealth].stats.PercentHPPoolMod;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'experienceQuints'){
+                            rune_quint_exp = rune_amount * json.data[quint_exp].stats.PercentEXPBonus * 100;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'lifestealQuints'){
+                            rune_quint_lifesteal = rune_amount * json.data[quint_lifesteal].stats.PercentLifeStealMod * 100;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'movespeedQuints'){
+                            rune_quint_ms = rune_amount * json.data[quint_ms].stats.PercentMovementSpeedMod * 100;
+                        } else if(all_runes[i].parentElement.parentElement.id === 'revivalQuints'){
 
-                for(var key in json.data){
-                    if(json.data[key].id === rune_id){
-                        console.log(json.data[key].stats);
-                        if(json.data[key].stats.hasOwnProperty('rFlatArmorPenetrationMod')){
-                            if(!remove_rune){
-                                document.getElementById('armorpen').innerHTML = armorpen + (rune_amount*Number(json.data[key].stats.rFlatArmorPenetrationMod));
-                                document.getElementById('armorpen').innerHTML = Number(document.getElementById('armorpen').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('armorpen').innerHTML = armorpen - (rune_amount*Number(json.data[key].stats.rFlatArmorPenetrationMod));
-                                document.getElementById('armorpen').innerHTML = Number(document.getElementById('armorpen').innerHTML).toFixed(2);
-                            }
+                        } else if(all_runes[i].parentElement.parentElement.id === 'spellvampQuints'){
+                            rune_quint_spellvamp = rune_amount * json.data[quint_spellvamp].stats.PercentSpellVampMod * 100;
                         }
-                        if(json.data[key].stats.hasOwnProperty('FlatPhysicalDamageMod')){
-                            if(!remove_rune){
-                                document.getElementById('attackdamage').innerHTML = attackdamage + (rune_amount*Number(json.data[key].stats.FlatPhysicalDamageMod));
-                                document.getElementById('attackdamage').innerHTML = Number(document.getElementById('attackdamage').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('attackdamage').innerHTML = attackdamage - (rune_amount*Number(json.data[key].stats.FlatPhysicalDamageMod));
-                                document.getElementById('attackdamage').innerHTML = Number(document.getElementById('attackdamage').innerHTML).toFixed(2);
-                            }
-                        }
-                        if(json.data[key].stats.hasOwnProperty('PercentAttackSpeedMod')){
-                            if(!remove_rune){
-                            } else {
-                            }
-                        }
-                        if(json.data[key].stats.hasOwnProperty('FlatCritChanceMod')){
-                            if(!remove_rune){
-                                document.getElementById('criticalchance').innerHTML = criticalchance + (rune_amount*Number(json.data[key].stats.FlatCritChanceMod)*100);
-                                document.getElementById('criticalchance').innerHTML = Number(document.getElementById('criticalchance').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('criticalchance').innerHTML = criticalchance - (rune_amount*Number(json.data[key].stats.FlatCritChanceMod)*100);
-                                document.getElementById('criticalchance').innerHTML = Number(document.getElementById('criticalchance').innerHTML).toFixed(2);
-                            }
-                        }
-                        if(json.data[key].stats.hasOwnProperty('rFlatMagicPenetrationMod')){
-                            if(!remove_rune){
-                                document.getElementById('magicpen').innerHTML = magicpen + (rune_amount*Number(json.data[key].stats.rFlatMagicPenetrationMod));
-                                document.getElementById('magicpen').innerHTML = Number(document.getElementById('magicpen').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('magicpen').innerHTML = magicpen - (rune_amount*Number(json.data[key].stats.rFlatMagicPenetrationMod));
-                                document.getElementById('magicpen').innerHTML = Number(document.getElementById('magicpen').innerHTML).toFixed(2);
-                            }
-                        }
-                        if(json.data[key].stats.hasOwnProperty('FlatArmorMod')){
-                            if(!remove_rune){
-                                document.getElementById('armor').innerHTML = armor + (rune_amount*Number(json.data[key].stats.FlatArmorMod));
-                                document.getElementById('armor').innerHTML = Number(document.getElementById('armor').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('armor').innerHTML = armor - (rune_amount*Number(json.data[key].stats.FlatArmorMod));
-                                document.getElementById('armor').innerHTML = Number(document.getElementById('armor').innerHTML).toFixed(2);
-                            }
-                        }
-                        if(json.data[key].stats.hasOwnProperty('FlatHPPoolMod')){
-                            if(!remove_rune){
-                                document.getElementById('health').innerHTML = health + (rune_amount*Number(json.data[key].stats.FlatHPPoolMod));
-                                document.getElementById('health').innerHTML = Number(document.getElementById('health').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('health').innerHTML = health - (rune_amount*Number(json.data[key].stats.FlatHPPoolMod));
-                                document.getElementById('health').innerHTML = Number(document.getElementById('health').innerHTML).toFixed(2);
-                            }
-                        }
-                        if(json.data[key].stats.hasOwnProperty('FlatMPPoolMod')){
-                            if(!remove_rune){
-                                document.getElementById('mana').innerHTML = mana + (rune_amount*Number(json.data[key].stats.FlatMPPoolMod));
-                                document.getElementById('mana').innerHTML = Number(document.getElementById('mana').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('mana').innerHTML = mana - (rune_amount*Number(json.data[key].stats.FlatMPPoolMod));
-                                document.getElementById('mana').innerHTML = Number(document.getElementById('mana').innerHTML).toFixed(2);
-                            }
-                        }
-                        if(json.data[key].stats.hasOwnProperty('FlatHPRegenMod')){
-                            if(!remove_rune){
-                                document.getElementById('healthregen').innerHTML = healthregen + (rune_amount*Number(json.data[key].stats.FlatHPRegenMod));
-                                document.getElementById('healthregen').innerHTML = Number(document.getElementById('healthregen').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('healthregen').innerHTML = healthregen - (rune_amount*Number(json.data[key].stats.FlatHPRegenMod));
-                                document.getElementById('healthregen').innerHTML = Number(document.getElementById('healthregen').innerHTML).toFixed(2);
-                            }
-                        }
-                        if(json.data[key].stats.hasOwnProperty('FlatMPRegenMod')){
-                            if(!remove_rune){
-                                document.getElementById('manaregen').innerHTML = manaregen + (rune_amount*Number(json.data[key].stats.FlatMPRegenMod));
-                                document.getElementById('manaregen').innerHTML = Number(document.getElementById('manaregen').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('manaregen').innerHTML = manaregen - (rune_amount*Number(json.data[key].stats.FlatMPRegenMod));
-                                document.getElementById('manaregen').innerHTML = Number(document.getElementById('manaregen').innerHTML).toFixed(2);
-                            }
-                        }
-                        if(json.data[key].stats.hasOwnProperty('FlatMagicDamageMod')){
-                            if(!remove_rune){
-                                document.getElementById('abilitypower').innerHTML = abilitypower + (rune_amount*Number(json.data[key].stats.FlatMagicDamageMod));
-                                document.getElementById('abilitypower').innerHTML = Number(document.getElementById('abilitypower').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('abilitypower').innerHTML = abilitypower - (rune_amount*Number(json.data[key].stats.FlatMagicDamageMod));
-                                document.getElementById('abilitypower').innerHTML = Number(document.getElementById('abilitypower').innerHTML).toFixed(2);
-                            }
-                        }
-                        if(json.data[key].stats.hasOwnProperty('rPercentCooldownMod')){
-                            if(!remove_rune){
-                                document.getElementById('cooldownreduction').innerHTML = cooldownreduction + (rune_amount*Number(json.data[key].stats.rPercentCooldownMod)*100*-1);
-                                document.getElementById('cooldownreduction').innerHTML = Number(document.getElementById('cooldownreduction').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('cooldownreduction').innerHTML = cooldownreduction - (rune_amount*Number(json.data[key].stats.rPercentCooldownMod)*100*-1);
-                                document.getElementById('cooldownreduction').innerHTML = Number(document.getElementById('cooldownreduction').innerHTML).toFixed(2);
-                            }
-                        }
-                        if(json.data[key].stats.hasOwnProperty('FlatSpellBlockMod')){
-                            if(!remove_rune){
-                                document.getElementById('magicresist').innerHTML = magicresist + (rune_amount*Number(json.data[key].stats.FlatSpellBlockMod));
-                                document.getElementById('magicresist').innerHTML = Number(document.getElementById('magicresist').innerHTML).toFixed(2);
-                            } else {
-                                document.getElementById('magicresist').innerHTML = magicresist - (rune_amount*Number(json.data[key].stats.FlatSpellBlockMod));
-                                document.getElementById('magicresist').innerHTML = Number(document.getElementById('magicresist').innerHTML).toFixed(2);
-                            }
-                        }
+                        
                     }
                 }
 
-                console.log(rune_id);
+                update_stats();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
             }

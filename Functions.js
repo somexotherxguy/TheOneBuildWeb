@@ -1104,8 +1104,27 @@
         var item_id = clicked_image;
         item_id = item_id.substr(item_id.length - 8);
         item_id = item_id.slice(0,4);
+
+        console.log(item_id);
         
         item_url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item/" + item_id + "?itemData=all&api_key=3f6239b0-97b4-42fa-8d52-63aabb176184";
+
+        $.ajax({
+            url:  item_url,
+            type: 'GET',
+            dataType: 'json',
+            data: {
+
+            },
+            success: function (json) {  
+                if(json.stats.hasOwnProperty('FlatArmorMod')){
+                    console.log("yay i did it");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("error getting Summoner data!");
+            }
+        });
     }
     
     function update_gamedata(){
@@ -1140,6 +1159,7 @@
     }
 
     function item_stats(){
+        console.log("guess who was called?");
         var inven_image = document.getElementById(this.id);
         var image_source = inven_image.src;
         
@@ -1167,6 +1187,9 @@
                 success: function (json) {	
                     //console.log(json.gold.total);
                     stats.innerHTML = "Gold: " + json.gold.total + "      |      " + json.sanitizedDescription;
+                    if(json.stats.hasOwnProperty('FlatArmorMod')){
+                        console.log("yay i did it");
+                    }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("error getting Summoner data!");
